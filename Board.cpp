@@ -16,6 +16,8 @@ Board::Board(){
     int start_index = std::rand() % angles.size();
     std::pair<int, int> start = angles[start_index];
     board[start.first][start.second] = Casella(1,0);
+    current_row=start.first;
+    current_col=start.second;
     for(int i=0; i<4; i++){
         if(angles[i] != angles[start_index]){
             board[angles[i].first][angles[i].second] = Casella();
@@ -68,6 +70,138 @@ void Board::print_board() const {
         std::cout<<std::endl;
         }
 }//print_board
+
+
+std::ostream& operator<<(std::ostream& os, Board valore){
+    valore.print_board();
+    return os;
+    }//operator<<
+
+void Board::movement(){
+     if(current_row==0 && current_col==0){
+        current_row=1;
+        count++;
+     }
+     else if(current_row==1 && current_col==0){
+        current_row=2;
+        count++;
+     }
+     else if(current_row==2 && current_col==0){
+        current_row=3;
+        count++;
+     }
+     else if(current_row==3 && current_col==0){
+        current_row=4;
+        count++;
+     }
+     else if(current_row==4 && current_col==0){
+        current_row=5;
+        count++;
+     }
+     else if(current_row==5 && current_col==0){
+        current_row=6;
+        count++;
+     }
+     else if(current_row==6 && current_col==0){
+        current_row=7;
+        count++;
+     }
+     else if(current_row==7 && current_col==0){
+        current_col=1;
+        count++;
+     }
+     else if(current_row==7 && current_col==1){
+        current_col=2;
+        count++;
+     }
+     else if(current_row==7 && current_col==2){
+        current_col=3;
+        count++;
+     }
+     else if(current_row==7 && current_col==3){
+        current_col=4;
+        count++;
+     }
+     else if(current_row==7 && current_col==4){
+        current_col=5;
+        count++;
+     }
+     else if(current_row==7 && current_col==5){
+        current_col=6;
+        count++;
+     }
+     else if(current_row==7 && current_col==6){
+        current_col=7;
+        count++;
+     }
+     else if(current_row==7 && current_col==7){
+        current_row=6;
+        count++;
+     }
+     else if(current_row==6 && current_col==7){
+        current_row=5;
+        count++;
+     }
+     else if(current_row==5 && current_col==7){
+        current_row=4;
+        count++;
+     }
+     else if(current_row==4 && current_col==7){
+        current_row=3;
+        count++;
+     }
+     else if(current_row==3 && current_col==7){
+        current_row=2;
+        count++;
+     }
+     else if(current_row==2 && current_col==7){
+        current_row=1;
+        count++;
+     }
+     else if(current_row==1 && current_col==7){
+        current_row=0;
+        count++;
+     }
+
+     else if(current_row==0 && current_col==7){
+        current_col=6;
+        count++;
+     }
+     else if(current_row==0 && current_col==6){
+        current_col=5;
+        count++;
+     }
+     else if(current_row==0 && current_col==5){
+        current_col=4;
+        count++;
+     }
+     else if(current_row==0 && current_col==4){
+        current_col=3;
+        count++;
+     }
+     else if(current_row==0 && current_col==3){
+        current_col=2;
+        count++;
+     }
+     else if(current_row==0 && current_col==2){
+        current_col=1;
+        count++;
+     }
+     else if(current_row==0 && current_col==1){
+        current_col=0;
+        count++;
+     }
+}//movement
+
+
+void Board::move(int n){
+    while(n>0){
+        movement();
+        n--;
+    }
+    std::cout<<"fatti "<<count<<" passi"<<std::endl;
+}//move
+
 
 
 

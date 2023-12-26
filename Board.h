@@ -11,14 +11,18 @@ private:
     std::vector<std::pair<int , int >> angles;
     int row_size=8;
     int col_size=8;
-	int count;/* servirà per la funzione move per
-	tener conto dei passi fatti e incrementare i fiorini
-	quando si fa un giro completo */
+    int current_row;
+    int current_col;
+	int count=0;
 
 public:
 	Board();
     void print_board() const;
-
+    void movement();
+    void move(int n);
+    int get_current_row() {return current_row;};
+    int get_current_col() {return current_col;};
+    int laps(){return (count/28);}
 };//Board
 
 
