@@ -13,7 +13,7 @@ private:
     int col_size=8;
 	int count;/* servirà per la funzione move per
 	tener conto dei passi fatti e incrementare i fiorini
-	quando si fa un giro ocmpleto */
+	quando si fa un giro completo */
 
 public:
 	Board();
