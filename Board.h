@@ -19,8 +19,7 @@ private:
 public:
 	Board();
     void print_board() const;
-    //void movement();
-    void move(Casella c, int n);
+    void move(Casella& c, int n);
     Casella get_starting_cell(){return starting_cell;};
     int get_starting_row(){return starting_cell.get_x();};
     int get_starting_col(){return starting_cell.get_y();};

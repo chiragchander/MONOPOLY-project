@@ -113,7 +113,7 @@ bool Casella::operator==(const Casella other){
 
 void Casella::print_position(){
         const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
-        std::cout<<alphabet[get_x()]<<get_y()+1;
+        std::cout<<alphabet[x]<<y +1;
 }//print_position
 
 void Casella::upgrade(){
@@ -130,71 +130,18 @@ int Casella::length() const {
     } else if (get_lvl() == 2 || get_lvl() == 3) {
         return 2;
     }
-    return 0; // Default
+    return 0;
 }
 
-void Casella::movement(){
-    int current_row= x;
-    int current_col= y;
-     if(current_row==0 && current_col==0)
-        current_row=1;
-     else if(current_row==1 && current_col==0)
-        current_row=2;
-     else if(current_row==2 && current_col==0)
-        current_row=3;
-     else if(current_row==3 && current_col==0)
-        current_row=4;
-     else if(current_row==4 && current_col==0)
-        current_row=5;
-     else if(current_row==5 && current_col==0)
-        current_row=6;
-     else if(current_row==6 && current_col==0)
-        current_row=7;
-     else if(current_row==7 && current_col==0)
-        current_col=1;
-     else if(current_row==7 && current_col==1)
-        current_col=2;
-     else if(current_row==7 && current_col==2)
-        current_col=3;
-     else if(current_row==7 && current_col==3)
-        current_col=4;
-     else if(current_row==7 && current_col==4)
-        current_col=5;
-     else if(current_row==7 && current_col==5)
-        current_col=6;
-     else if(current_row==7 && current_col==6)
-        current_col=7;
-     else if(current_row==7 && current_col==7)
-        current_row=6;
-     else if(current_row==6 && current_col==7)
-        current_row=5;
-     else if(current_row==5 && current_col==7)
-        current_row=4;
-     else if(current_row==4 && current_col==7)
-        current_row=3;
-     else if(current_row==3 && current_col==7)
-        current_row=2;
-     else if(current_row==2 && current_col==7)
-        current_row=1;
-     else if(current_row==1 && current_col==7)
-        current_row=0;
-     else if(current_row==0 && current_col==7)
-        current_col=6;
-     else if(current_row==0 && current_col==6)
-        current_col=5;
-     else if(current_row==0 && current_col==5)
-        current_col=4;
-     else if(current_row==0 && current_col==4)
-        current_col=3;
-     else if(current_row==0 && current_col==3)
-        current_col=2;
-     else if(current_row==0 && current_col==2)
-        current_col=1;
-     else if(current_row==0 && current_col==1)
-        current_col=0;
+
+void Casella::movement() {
+    if (x == 0 && y < 7)
+        y++;
+    else if (y == 7 && x < 7)
+        x++;
+    else if (x == 7 && y > 0)
+        y--;
+    else if (y == 0 && x > 0)
+        x--;
 }//movement
-
-
-
-
 

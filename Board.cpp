@@ -89,12 +89,13 @@ std::ostream& operator<<(std::ostream& os, Board valore){
     }//operator<<
 
 
-void Board::move(Casella c,int n){
-    while(n>0){
+void Board::move(Casella& c, int n) {
+    while (n > 0) {
         c.movement();
         count++;
         n--;
     }
+
     //si può togliere il cout
     std::cout<<"fatti "<<count<<" passi"<<std::endl;
 }//move

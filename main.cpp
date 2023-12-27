@@ -8,11 +8,14 @@ int main() {
     Board b;
     b.print_board();
     Casella start= b.get_starting_cell();
-    b.move(start,28);
+    for (int i = 0; i < 28; ++i) {
+    b.move(start, 1);
+    cout << endl;
+    start.print_position();
+    cout << endl;
+}
     cout<<endl;
-    int laps=b.laps
-
-    cout<<"Fatti "<<laps<<" giri"<<endl;
+    int laps=b.laps();
 
 
     return 0;
