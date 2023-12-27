@@ -57,8 +57,15 @@ Board::Board(){
 }//Board
 
 void Board::print_board() const {
+    std::cout<<"     ";
+    for(int n=0; n<col_size;n++){
+        std::cout<<n+1<<"    ";
+    }
+    std::cout<<std::endl;
     for (int i = 0; i < row_size; ++i) {
+        std::cout<<alphabet[i]<<"  ";
         for (int j = 0; j < col_size; ++j) {
+
                 if(board[i][j].is_central_cell()){
                     std::cout<<"     ";
                 }
