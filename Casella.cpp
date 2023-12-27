@@ -1,3 +1,4 @@
+//chirag chander
 #include "Casella.h"
 
 Casella::Casella() : type(0), lvl(0) {}
@@ -101,17 +102,3 @@ Casella& Casella::operator=(const Casella& other) {
 Casella Casella::operator==(const Casella other){
     return (lvl== other.get_lvl() && type==other.get_type());
 }//operator==
-
-
-/*
-
-| P  || L  || L  || E  || L  || E  || S  ||    |
-| S  |                                    | S  |
-| L  |                                    | E  |
-| E  |                                    | E  |
-| S  |                                    | S  |
-| E  |                                    | S  |
-| L  |                                    | S  |
-|    || S  || E  || L  || S  || S  || E  ||    |
-
-*/

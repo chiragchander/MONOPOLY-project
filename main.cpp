@@ -7,7 +7,7 @@ int main() {
     Board b;
     b.print_board();
     cout<<endl;
-    int row= b.get_current_row();
+    char row= b.get_current_row();
     int col= b.get_current_col();
     cout<<row<<" "<<col<<endl;
     b.move(28);
