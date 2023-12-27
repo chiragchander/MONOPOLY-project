@@ -9,21 +9,40 @@ class Board {
 private:
 	std::vector<std::vector<Casella>> board;
     std::vector<std::pair<int , int >> angles;
-    std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
+    const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
     int row_size=8;
     int col_size=8;
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    /////////////////     ATTENZIONE  ////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //rimuovere current_row e current_col
     int current_row;
     int current_col;
 	int count=0;
 
+	Casella starting_cell;
+
 public:
 	Board();
     void print_board() const;
-    void movement();
-    void move(int n);
+    //void movement();
+    void move(Casella c, int n);
+    Casella get_starting_cell(){return starting_cell;};
+    int get_starting_row(){return starting_cell.get_x();};
+    int get_starting_col(){return starting_cell.get_y();};
+    int laps(){return (count/28);};
+
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    /////////////////     ATTENZIONE  ////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //da rimuovere current_row e current_col
     char get_current_row() {return alphabet[current_row];};
     int get_current_col() {return current_col+1;};
-    int laps(){return (count/28);}
+
 };//Board
 
 

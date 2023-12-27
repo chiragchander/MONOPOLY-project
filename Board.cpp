@@ -9,24 +9,25 @@
 Board::Board(){
     srand((unsigned) time(NULL));//generatore numeri casuali
     board.resize(row_size, std::vector<Casella>(col_size));/*inizializzazione tabellone
-                                               con posizione iniziale casuale*/
+                                                              con posizione iniziale casuale*/
     //angles rappresenta le posizioni angolari
     std::vector<std::pair<int , int >> angles = {{0, 0}, {0, 7}, {7, 0}, {7, 7}};
     //scelta casuale di un indice che sarà il punto di partenza
     int start_index = std::rand() % angles.size();
     std::pair<int, int> start = angles[start_index];
-    board[start.first][start.second] = Casella(1,0);
-    current_row=start.first;
-    current_col=start.second;
+    board[start.first][start.second] = Casella(1,0, start.first, start.second);
+    starting_cell= board[start.first][start.second];
+
+
     for(int i=0; i<4; i++){
         if(angles[i] != angles[start_index]){
-            board[angles[i].first][angles[i].second] = Casella();
+            board[angles[i].first][angles[i].second] = Casella(0,0, angles[i].first, angles[i].second);
         }
     }
     //riempimento caselle vuote centrali
     for(int i=1; i<row_size -1; i++){
         for(int j=1; j<col_size-1; j++)
-            board[i][j] = Casella(0,-1);
+            board[i][j] = Casella(0,-1, i, j);
     }
     //riempimento caselle laterali, escluse le caselle angolari
     std::vector<std::pair<int, int>> lateral_cells = {{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6},
@@ -39,18 +40,18 @@ Board::Board(){
     int s = 10;
     int l = 6;
     //assegnamento della proprietà per ogni cella laterale
-    for (const auto& pos : lateral_cells) {
+    for (const std::pair<int, int>& pos : lateral_cells) {
         int x = pos.first;
         int y = pos.second;
 
         if (e > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(2);
+            board[x][y] = Casella(2,1,x,y);
             e--;
         } else if (s > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(3);
+            board[x][y] = Casella(3,1,x,y);
             s--;
         } else if (l > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(4);
+            board[x][y] = Casella(4,1,x,y);
             l--;
         }
     }
@@ -71,141 +72,30 @@ void Board::print_board() const {
                 }
                 else {
                     //metto un if, se player position uguale a board[i][j] stampa anche index player
-                    std::cout <<"|"<< board[i][j]<<"  |";
+                            std::cout <<"|"<< board[i][j]<<"  |";
+                            /*
+                            std::cout <<"|"<< board[i][j]<<"|"<< std::string(7 - board[i][j].length(), ' ');
+                            da testare per gestire spaziatura costante indipendentemente dalla lunghezza della casella
+                            */
                 }
             }
         std::cout<<std::endl;
         }
 }//print_board
 
-
 std::ostream& operator<<(std::ostream& os, Board valore){
     valore.print_board();
     return os;
     }//operator<<
 
-void Board::movement(){
-     if(current_row==0 && current_col==0){
-        current_row=1;
-        count++;
-     }
-     else if(current_row==1 && current_col==0){
-        current_row=2;
-        count++;
-     }
-     else if(current_row==2 && current_col==0){
-        current_row=3;
-        count++;
-     }
-     else if(current_row==3 && current_col==0){
-        current_row=4;
-        count++;
-     }
-     else if(current_row==4 && current_col==0){
-        current_row=5;
-        count++;
-     }
-     else if(current_row==5 && current_col==0){
-        current_row=6;
-        count++;
-     }
-     else if(current_row==6 && current_col==0){
-        current_row=7;
-        count++;
-     }
-     else if(current_row==7 && current_col==0){
-        current_col=1;
-        count++;
-     }
-     else if(current_row==7 && current_col==1){
-        current_col=2;
-        count++;
-     }
-     else if(current_row==7 && current_col==2){
-        current_col=3;
-        count++;
-     }
-     else if(current_row==7 && current_col==3){
-        current_col=4;
-        count++;
-     }
-     else if(current_row==7 && current_col==4){
-        current_col=5;
-        count++;
-     }
-     else if(current_row==7 && current_col==5){
-        current_col=6;
-        count++;
-     }
-     else if(current_row==7 && current_col==6){
-        current_col=7;
-        count++;
-     }
-     else if(current_row==7 && current_col==7){
-        current_row=6;
-        count++;
-     }
-     else if(current_row==6 && current_col==7){
-        current_row=5;
-        count++;
-     }
-     else if(current_row==5 && current_col==7){
-        current_row=4;
-        count++;
-     }
-     else if(current_row==4 && current_col==7){
-        current_row=3;
-        count++;
-     }
-     else if(current_row==3 && current_col==7){
-        current_row=2;
-        count++;
-     }
-     else if(current_row==2 && current_col==7){
-        current_row=1;
-        count++;
-     }
-     else if(current_row==1 && current_col==7){
-        current_row=0;
-        count++;
-     }
 
-     else if(current_row==0 && current_col==7){
-        current_col=6;
-        count++;
-     }
-     else if(current_row==0 && current_col==6){
-        current_col=5;
-        count++;
-     }
-     else if(current_row==0 && current_col==5){
-        current_col=4;
-        count++;
-     }
-     else if(current_row==0 && current_col==4){
-        current_col=3;
-        count++;
-     }
-     else if(current_row==0 && current_col==3){
-        current_col=2;
-        count++;
-     }
-     else if(current_row==0 && current_col==2){
-        current_col=1;
-        count++;
-     }
-     else if(current_row==0 && current_col==1){
-        current_col=0;
-        count++;
-     }
-}//movement
-
-
-void Board::move(int n){
+void Board::move(Casella c,int n){
     while(n>0){
-        movement();
+        c.movement();
+        count++;
         n--;
     }
+    //si può togliere il cout
     std::cout<<"fatti "<<count<<" passi"<<std::endl;
 }//move
 
