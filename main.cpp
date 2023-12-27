@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Casella.h"
 #include "Board.h"
-#include "Player.h"
+
 using namespace std;
 
 int main() {
@@ -10,7 +10,8 @@ int main() {
     Casella start= b.get_starting_cell();
     b.move(start,28);
     cout<<endl;
-    int laps=b.laps();
+    int laps=b.laps
+
     cout<<"Fatti "<<laps<<" giri"<<endl;
 
 
