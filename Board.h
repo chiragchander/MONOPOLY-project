@@ -20,7 +20,7 @@ public:
 	Board();
     void print_board() const;
     void move(Casella& c, int n);
-    Casella get_starting_cell(){return starting_cell;};
+    Casella get_starting_cell()const {return starting_cell;};
     int get_starting_row(){return starting_cell.get_x();};
     int get_starting_col(){return starting_cell.get_y();};
     int laps(){return (count/28);};
@@ -31,19 +31,3 @@ public:
 std::ostream& operator<<(std::ostream& os, Board valore);
 
 #endif //BOARD_H
-
-
-
-
-/*
-
-| P  || L  || L  || E  || L  || E  || S  ||    |
-| S  |                                    | S  |
-| L  |                                    | E  |
-| E  |                                    | E  |
-| S  |                                    | S  |
-| E  |                                    | S  |
-| L  |                                    | S  |
-|    || S  || E  || L  || S  || S  || E  ||    |
-
-*/

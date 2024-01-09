@@ -18,7 +18,6 @@ Board::Board(){
     board[start.first][start.second] = Casella(1,0, start.first, start.second);
     starting_cell= board[start.first][start.second];
 
-
     for(int i=0; i<4; i++){
         if(angles[i] != angles[start_index]){
             board[angles[i].first][angles[i].second] = Casella(0,0, angles[i].first, angles[i].second);
@@ -39,6 +38,7 @@ Board::Board(){
     int e = 8;
     int s = 10;
     int l = 6;
+
     //assegnamento della proprietà per ogni cella laterale
     for (const std::pair<int, int>& pos : lateral_cells) {
         int x = pos.first;
@@ -57,30 +57,29 @@ Board::Board(){
     }
 }//Board
 
-void Board::print_board() const {
+void Board::print_board() const{
     std::cout<<"     ";
+
     for(int n=0; n<col_size;n++){
-        std::cout<<n+1<<"    ";
-    }
+            std::cout<<n+1<<"       ";
+        }
+
     std::cout<<std::endl;
     for (int i = 0; i < row_size; ++i) {
-        std::cout<<alphabet[i]<<"  ";
+        std::cout<<alphabet[i]<<"   ";
         for (int j = 0; j < col_size; ++j) {
 
                 if(board[i][j].is_central_cell()){
-                    std::cout<<"     ";
+                    std::cout<<"        ";
                 }
                 else {
                     //metto un if, se player position uguale a board[i][j] stampa anche index player
-                            std::cout <<"|"<< board[i][j]<<"  |";
-                            /*
-                            std::cout <<"|"<< board[i][j]<<"|"<< std::string(7 - board[i][j].length(), ' ');
-                            da testare per gestire spaziatura costante indipendentemente dalla lunghezza della casella
-                            */
+                            std::cout <<"|"<< board[i][j]<<"     |";
+
                 }
             }
         std::cout<<std::endl;
-        }
+    }
 }//print_board
 
 std::ostream& operator<<(std::ostream& os, Board valore){
