@@ -12,7 +12,7 @@ private:
     int y; //Indica la posizione y della Casella
 public:
     Casella();       // Costruttore che potrebbe anche non servire
-    Casella(int t,int l, int row, int col);
+    Casella(int t,int l, int row, int col); //Costruttore che assegna anche la posizione a una casella
 
     int get_x()const {return x;};
     int get_y() const {return y;};

@@ -107,7 +107,7 @@ Casella& Casella::operator=(const Casella& other) {
 }//operator=
 
 bool Casella::operator==(const Casella other){
-    return (lvl== other.get_lvl() && type==other.get_type());
+    return (x == other.get_x() && y == other.get_y());
 }//operator==
 
 
