@@ -33,7 +33,6 @@ void Dadi::stampa_quadro() {
 }
 
 // Overloading operatore <<
-// @@@ -> Avrei messo const [Dadi& d] come parametro, ma mi da errori la versione const.
-std::ostream& operator<<(std::ostream& os, Dadi& d) {
+std::ostream& operator<<(std::ostream& os, const Dadi& d) {
     return os << "[" << d.get_dado1() << "+" << d.get_dado2() << "]=" << d.attuale() << "\n";
 }

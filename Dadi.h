@@ -14,11 +14,11 @@ private:
 public:
     Dadi();
     int lancio();
-    int attuale() { return somma; }
-    int get_dado1() { return dado1; }
-    int get_dado2() { return dado2; }
+    int attuale() const { return somma; }
+    int get_dado1() const { return dado1; }
+    int get_dado2() const { return dado2; }
     void stampa_quadro();
 };
-std::ostream& operator<<(std::ostream& os, Dadi& d);
+std::ostream& operator<<(std::ostream& os, const Dadi& d);
 
 #endif
