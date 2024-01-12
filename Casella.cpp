@@ -1,14 +1,11 @@
 //chirag chander
 #include "Casella.h"
+#include "Posizione.h"
 
 Casella::Casella() : type(0), lvl(0) {}
 
-Casella::Casella(int t,int l, int row, int col):type(t), lvl(l), x(row), y(col){}
+Casella::Casella(int t,int l, Posizione pos):type(t), lvl(l), position(pos){}
 
-void Casella::set_position(int row, int col) {
-        x=row;
-        y=col;
-    }//set_position
 
 int Casella::revenue() const {
     if (lvl == 0 || type == 1) return 0; // una casella angolare o un terreno non ha costo di pernottamento
@@ -100,20 +97,19 @@ Casella& Casella::operator=(const Casella& other) {
     if (this != &other) { // Verifica autoassegnazione
         type = other.type;
         lvl = other.lvl;
-        x=other.get_x();
-        y=other.get_y();
+        position.set_position(other.get_position().get_x(), other.get_position().get_y() );
     }
     return *this;
 }//operator=
 
-bool Casella::operator==(const Casella other){
-    return (x == other.get_x() && y == other.get_y());
+bool Casella::operator==(const Casella& other) {
+    return (position.get_x() == other.get_position().get_x()) && (position.get_y() == other.get_position().get_y());
 }//operator==
 
 
 void Casella::print_position(){
         const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
-        std::cout<<alphabet[x]<<y +1;
+        std::cout<<alphabet[position.get_x()]<<position.get_y() +1;
 }//print_position
 
 void Casella::upgrade(){
@@ -131,17 +127,17 @@ int Casella::length() const {
         return 2;
     }
     return 0;
-}
+}//length
 
 
 void Casella::movement() {
-    if (x == 0 && y < 7)
-        y++;
-    else if (y == 7 && x < 7)
-        x++;
-    else if (x == 7 && y > 0)
-        y--;
-    else if (y == 0 && x > 0)
-        x--;
+    if (position.get_x() == 0 && position.get_y() < 7)
+        position.set_position(position.get_x(), position.get_y() + 1);
+    else if (position.get_y() == 7 && position.get_x() < 7)
+        position.set_position(position.get_x() + 1, position.get_y());
+    else if (position.get_x() == 7 && position.get_y() > 0)
+        position.set_position(position.get_x(), position.get_y() - 1);
+    else if (position.get_y() == 0 && position.get_x() > 0)
+        position.set_position(position.get_x() - 1, position.get_y());
 }//movement
 

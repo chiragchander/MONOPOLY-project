@@ -3,23 +3,21 @@
 
 #include <iostream>
 #include <vector>
+#include "Posizione.h"
 
 class Casella {
 private:
     int type; // Type è un intero che va da 0 a 4 {0 = vuota, 1 = partenza, 2 = economica, 3 = standard, 4 = lusso}
     int lvl;  // Lvl è un intero che va da 0 a 3 {0 = casella angolare, 1= terreno , 2 = con casa, 3 = con albergo}
-    int x; //Indica la posizione x della Casella
-    int y; //Indica la posizione y della Casella
+    Posizione position; //Indica la posizione della casella
+    int owner=0; //Variabile che indica il proprietario della cella, il valore equivale all'indice del giocatore proprietario
 public:
-    Casella();       // Costruttore che potrebbe anche non servire
-    Casella(int t,int l, int row, int col); //Costruttore che assegna anche la posizione a una casella
 
-    int get_x()const {return x;};
-    int get_y() const {return y;};
+    Casella();       // Costruttore che potrebbe anche non servire
+    Casella(int t,int l, Posizione pos); //Costruttore che assegna anche la posizione a una casella
+
     int get_type() const { return type; } // Restituisce il livello della casella
     int get_lvl() const { return lvl; }   // Restituisce il livello della casella
-    void set_position(int row, int col);
-    void print_position();
 
     void set_type(int new_type) { type = new_type; } // Assegna un tipo nuovo alla casella (forse non servirà)
     void upgrade(); // Migliora, se possibile, il livello della casella
@@ -30,11 +28,13 @@ public:
     bool vuota() const; //Verifica se una cella PERCORRIBILE è vuota
     bool is_central_cell() const; //Verifica che una cella NON sia percorribile
     Casella& operator=(const Casella& other);// Overloading Operatore =
-    bool operator==(const Casella other);//Overloading Operatore ==
+    bool operator==(const Casella& other);//Overloading Operatore ==
     int length() const; //Restituisce la lunghezza della Casella
     void movement();//Funzione che regola il movimento di una singola casella
+    void print_position(); //Stampa la posizione della cella usando come indice della ascissa un numero da 1 a 8, mentre come indice dell'ordinata una lettera da A a H
+    Posizione get_position() const {return position;}; //restituisce la posizione della cella
 
 };
-std::ostream& operator<<(std::ostream& os, const Casella& c);
+std::ostream& operator<<(std::ostream& os, const Casella& c);//Overloading operatore<<
 
 #endif

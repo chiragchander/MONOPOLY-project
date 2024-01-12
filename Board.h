@@ -24,8 +24,8 @@ public:
     void print_board();
     void move(Casella& c, int n);
     Casella get_starting_cell()const {return starting_cell;};
-    int get_starting_row(){return starting_cell.get_x();};
-    int get_starting_col(){return starting_cell.get_y();};
+    int get_starting_row(){return starting_cell.get_position().get_x();};
+    int get_starting_col(){return starting_cell.get_position().get_y();};
     int laps(){return (count/28);};
 
     /*

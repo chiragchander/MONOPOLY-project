@@ -15,18 +15,18 @@ Board::Board(){
     //scelta casuale di un indice che sarà il punto di partenza
     int start_index = std::rand() % angles.size();
     std::pair<int, int> start = angles[start_index];
-    board[start.first][start.second] = Casella(1,0, start.first, start.second);
+    board[start.first][start.second] = Casella(1,0, Posizione(start.first, start.second));
     starting_cell= board[start.first][start.second];
 
     for(int i=0; i<4; i++){
         if(angles[i] != angles[start_index]){
-            board[angles[i].first][angles[i].second] = Casella(0,0, angles[i].first, angles[i].second);
+            board[angles[i].first][angles[i].second] = Casella(0,0, Posizione(angles[i].first, angles[i].second) );
         }
     }
     //riempimento caselle vuote centrali
     for(int i=1; i<row_size -1; i++){
         for(int j=1; j<col_size-1; j++)
-            board[i][j] = Casella(0,-1, i, j);
+            board[i][j] = Casella(0,-1, Posizione(i, j));
     }
     //riempimento caselle laterali, escluse le caselle angolari
     std::vector<std::pair<int, int>> lateral_cells = {{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6},
@@ -45,13 +45,13 @@ Board::Board(){
         int y = pos.second;
 
         if (e > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(2,1,x,y);
+            board[x][y] = Casella(2,1, Posizione(x,y));
             e--;
         } else if (s > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(3,1,x,y);
+            board[x][y] = Casella(3,1, Posizione(x,y));
             s--;
         } else if (l > 0 && board[x][y].vuota()) {
-            board[x][y] = Casella(4,1,x,y);
+            board[x][y] = Casella(4,1, Posizione(x,y));
             l--;
         }
     }
