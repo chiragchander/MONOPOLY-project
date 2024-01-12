@@ -141,3 +141,10 @@ void Casella::movement() {
         position.set_position(position.get_x() - 1, position.get_y());
 }//movement
 
+void Casella::set_owner(int player_index){
+    owner=player_index;
+}//set_owner
+
+
+
+
