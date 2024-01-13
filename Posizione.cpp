@@ -9,6 +9,12 @@ void Posizione::set_position(int pos_x, int pos_y){
     y=pos_y;
 }//set_position
 
+Posizione Posizione::set_position(const Posizione& pos){
+    x=pos.get_x();
+    y=pos.get_y();
+}
+//set_position
+
 void Posizione::print_position(){
     std::cout<<"("<<x<<","<<y<<")";
 }//print_position

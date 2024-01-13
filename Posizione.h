@@ -15,6 +15,7 @@ public:
     int get_y() const {return y;};
 
     void set_position(int pos_x, int pos_y);
+    Posizione set_position(const Posizione& pos);
     void print_position();
     Posizione next_position();
 
