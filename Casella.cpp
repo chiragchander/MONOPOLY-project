@@ -129,18 +129,6 @@ int Casella::length() const {
     return 0;
 }//length
 
-
-void Casella::movement() {
-    if (position.get_x() == 0 && position.get_y() < 7)
-        position.set_position(position.get_x(), position.get_y() + 1);
-    else if (position.get_y() == 7 && position.get_x() < 7)
-        position.set_position(position.get_x() + 1, position.get_y());
-    else if (position.get_x() == 7 && position.get_y() > 0)
-        position.set_position(position.get_x(), position.get_y() - 1);
-    else if (position.get_y() == 0 && position.get_x() > 0)
-        position.set_position(position.get_x() - 1, position.get_y());
-}//movement
-
 void Casella::set_owner(int player_index){
     owner=player_index;
 }//set_owner

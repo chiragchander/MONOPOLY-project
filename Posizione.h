@@ -16,6 +16,7 @@ public:
 
     void set_position(int pos_x, int pos_y);
     void print_position();
+    Posizione next_position();
 
 
     Posizione& operator=(const Posizione& other);// Overloading Operatore =

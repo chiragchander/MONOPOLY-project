@@ -13,6 +13,23 @@ void Posizione::print_position(){
     std::cout<<"("<<x<<","<<y<<")";
 }//print_position
 
+
+Posizione Posizione::next_position() {
+    int nextX = x;
+    int nextY = y;
+
+    if (x == 0 && y < 7)
+        nextY++;
+    else if (y == 7 && x < 7)
+        nextX++;
+    else if (x == 7 && y > 0)
+        nextY--;
+    else if (y == 0 && x > 0)
+        nextX--;
+
+    return Posizione(nextX, nextY);
+}//next_position
+
 Posizione& Posizione::operator=(const Posizione& other) {
     if (this != &other) { // Verifica autoassegnazione
         x=other.get_x();

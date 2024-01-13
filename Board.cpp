@@ -65,11 +65,11 @@ std::ostream& operator<<(std::ostream& os, Board valore){
 
 void Board::move(Casella& c, int n) {
     while (n > 0) {
-        c.movement();
+        c.set_position(c.get_position().next_position() );
         count++;
         n--;
     }
-
+////////////////////////////////////////////////////////////////////////////
     //si può togliere il cout
     std::cout<<"fatti "<<count<<" passi"<<std::endl;
 }//move
@@ -87,6 +87,8 @@ void Board::print_line(int n) {
                 std::vector<int> test;
                 std::vector<int> giocatori_presenti_nella_casella; //in cui faccio push_back i giocatori nella casella
                 /*
+                QUESTO ALGORITMO VERRA' REALIZZATO DIRETTAMENTE NELLA CLASSE GAME, IN QUESTA CLASSE BASTA CHE VENGA STAMPATO IL TABELLONE
+                SENZA GIOCATORI
                 -da sostituire con un vettore di Player che indica i giocatori presenti nel tabellone
                 -invece di if(test.size()) devo valutare il numero di giocatori nella casella, tipo con un for
                  in cui vedo se la posizione di board[i][n-1] è uguale alla posizione del giocatore */
