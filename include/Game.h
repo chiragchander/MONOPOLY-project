@@ -9,17 +9,17 @@ class Casella;
 class Game {
 protected:
     int turno = 1;
-    std::vector<Player> giocatori;
+    std::vector<Player*> giocatori;
     // LLL aggiungerei un oggetto Logger per dare in gestione gli eventi da stampare
     Board tabellone;
-    std::vector<std::vector<Casella>> board = tabellone.get_board();
+    std::vector<std::vector<Casella>> board;
     void print_gameboard_line(int n);
 public:
     Game();
     int get_turno() const { return turno; }
     void next_turno();
     void intro();
-    void add_giocatore(Player pippo);
+    void add_giocatore(Player* pippo);
     void del_giocatore(Player* pippo);
     void giocatore_over(Player* pippo);
     bool fine_gioco();

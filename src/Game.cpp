@@ -8,16 +8,25 @@
 
 
 
-Game::Game()
-    : turno {1} {
+Game::Game(): turno {1} {
+    board= tabellone.get_board();
+    Player* giocatore2 = new Player(2);
+    Player* giocatore3 = new Player(3);
+    Player* giocatore4 = new Player(4);
+    add_giocatore(giocatore2);
+    add_giocatore(giocatore3);
+    add_giocatore(giocatore4);
+
 }
 
-void Game::add_giocatore(Player pippo) {
+void Game::add_giocatore(Player* pippo) {
     giocatori.push_back(pippo);
 }
 
 void Game::del_giocatore(Player* pippo) {
-    auto it = std::find(giocatori.begin(), giocatori.end(), *pippo);
+    auto it = std::find_if(giocatori.begin(), giocatori.end(), [pippo](const Player* player) {
+        return *player == *pippo;
+    });
     if (it != giocatori.end()) {
         giocatori.erase(it);
         std::vector<Casella*> caselle= pippo->get_proprie();
@@ -69,11 +78,11 @@ bool Game::fine_gioco() {
 Player* Game::vincitore() {
     int temp = 0;
     for(int i = 0; i < giocatori.size(); i++) {
-        if(giocatori[i].get_budget() > giocatori[temp].get_budget()) {
+        if(giocatori[i]->get_budget() > giocatori[temp]->get_budget()) {
             temp = i;
         }
     }
-    return &giocatori[temp];
+    return giocatori[temp];
     // @@@ il problema è quando vi saranno due primi ex-equo, che va implementato.
 }
 
@@ -97,10 +106,10 @@ void Game::print_gameboard_line(int n){
                             if(board[i][n-1].is_central_cell()) std::cout<<"        ";
                             else{
 
-                                std::vector<Casella*> caselle_giocatore1 = giocatori[0].get_proprie();
-                                std::vector<Casella*> caselle_giocatore2 = giocatori[1].get_proprie();
-                                std::vector<Casella*> caselle_giocatore3 = giocatori[2].get_proprie();
-                                std::vector<Casella*> caselle_giocatore4 = giocatori[3].get_proprie();
+                                std::vector<Casella*> caselle_giocatore1 = giocatori[0]->get_proprie();
+                                std::vector<Casella*> caselle_giocatore2 = giocatori[1]->get_proprie();
+                                std::vector<Casella*> caselle_giocatore3 = giocatori[2]->get_proprie();
+                                std::vector<Casella*> caselle_giocatore4 = giocatori[3]->get_proprie();
                                 std::vector<int> giocatori_presenti_nella_casella;
 
                                 // Verifica la presenza per il primo giocatore
