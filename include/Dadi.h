@@ -18,6 +18,7 @@ public:
     int get_dado1() const { return dado1; }
     int get_dado2() const { return dado2; }
     void stampa_quadro();
+    bool scelta_percento();
 };
 std::ostream& operator<<(std::ostream& os, const Dadi& d);
 
