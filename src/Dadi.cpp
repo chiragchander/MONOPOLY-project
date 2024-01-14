@@ -35,3 +35,12 @@ void Dadi::stampa_quadro() {
 std::ostream& operator<<(std::ostream& os, const Dadi& d) {
     return os << "[" << d.get_dado1() << "+" << d.get_dado2() << "]=" << d.attuale() << "\n";
 }
+
+// Scelta per giocatore computer in base alla percentuale.
+// Al 25% compra il terreno.
+bool Dadi::scelta_percento() {
+    int percento;
+    percento = rand() % 4;
+    if(percento == 0) return true;
+    else return false;
+}
