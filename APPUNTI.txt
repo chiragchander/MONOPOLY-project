@@ -1,0 +1,29 @@
+Ordunque, qui è Ema. Mi sono reso conto che se non implementiamo le varie parti in maniera sincrona, magari con qualche modalità di live coding in tempo reale, non si va avanti bene.
+In alcuni punti mi sono trovato a dovermi ristudiare il vostro codice per poter implementare cose, che probabilmente voi avreste fatto in un attimo.
+Ad ora sto lavorando su Game.h / Game.cpp che danno errori in compilazione, le stavo scrivendo ora.
+Troveremo un modo, per ora nei commenti ho usato al volo le seguenti abbrviazioni.
+- @@@ inidicazioni più che altro per me
+- LLL indicazioni per Luca, soprattutto in merito alla parte Logger.
+- CCC indicazioni per Chirag, soprattutto in merito alla parte Board.
+
+Servono ancora un Main, un MainLoop, che può essere anche una maxi funzione nel Main, decidere se implementare con ereditarietà classe Game_Umano.
+
+Da Main stabilire con argc/argv se il gioco ha giocatore umano ed agire di conseguenza.
+
+MainLoop
+INIZIO
+- Tirare i dadi per stabilire ordine giocatori.
+    - Confrontando attuale() con lancio() ripetere ovviamente il tiro.
+    - Salvare la lista in Game su vettore Game::giocatori. Più che altro ho usato come nomi Giovatore "1", "2", "3" e "4" come richiesto, ma essi non corrisponderanno all'ordine.
+    - Tale ordine viene per ora previsto in Game::intro() su cui mi sono fermato or ora.
+
+TURNO DI GIOCO LOOP
+
+FINALE
+
+OGGETTI contenuti in MainLoop:
+- 1 Board
+- 1 Dadi
+- 1 Game
+- 1 Logger
+- Variabile per sapere se Game o Game_Umano
