@@ -5,6 +5,8 @@
 #include "../include/Player.h"
 #include "../include/Dadi.h"        // Serve solo nella funzione intro()
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 
 
@@ -90,84 +92,62 @@ Player* Game::vincitore() {
 }
 
 void Game::print_gameboard(){
-    for(int i=0; i<=8; i++){
+        tabellone.print_line(0);
+    for(int i=1; i<=8; i++){
         print_gameboard_line(i);
     }
 }
 
-void Game::print_gameboard_line(int n){
-    if(giocatori.empty()) tabellone.print_line(n);
-    else{
+void Game::print_gameboard_line(int n) {
+        std::vector<int> giocatori_presenti_nella_casella;
+        std::vector<std::pair<int, int>> posizioni_giocatori;
+        for (const auto& giocatore : giocatori) {
+            int x = giocatore->get_position().get_x();
+            int y = giocatore->get_position().get_y();
+            posizioni_giocatori.push_back(std::make_pair(x, y));
+        }
 
-                tabellone.print_line(0);
-                std::vector<Casella*> caselle_giocatore1 = giocatori[0]->get_proprie();
-                std::vector<Casella*> caselle_giocatore2 = giocatori[1]->get_proprie();
-                std::vector<Casella*> caselle_giocatore3 = giocatori[2]->get_proprie();
-                std::vector<Casella*> caselle_giocatore4 = giocatori[3]->get_proprie();
-                std::vector<int> giocatori_presenti_nella_casella;
+        std::cout << alphabet[n-1] << "   ";
+        for (int i = 0; i < 8; i++) {
+            if (board[i][n - 1].is_central_cell()) {
+                std::cout << "        ";
+            } else {
+                giocatori_presenti_nella_casella.clear();
 
-                            std::cout << alphabet[n-1] << "   ";
-                            for(int i = 0; i < 8; i++) {
-                            if(board[i][n-1].is_central_cell()) std::cout<<"        ";
+                // Verifica la presenza dei giocatori nella casella
+                for (int giocatore_index = 0; giocatore_index < giocatori.size(); ++giocatore_index) {
+                    int x_giocatore = posizioni_giocatori[giocatore_index].first;
+                    int y_giocatore = posizioni_giocatori[giocatore_index].second;
 
-                            else{
-
-                                // Verifica la presenza per il primo giocatore
-                                for (const auto& casella : caselle_giocatore1) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(1);
-                                    break;
-                                    }
-                                }
-
-                                // Verifica la presenza per il secondo giocatore
-                                for (const auto& casella : caselle_giocatore2) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(2);
-                                    break;
-                                    }
-                                }
-
-                                // Verifica la presenza per il terzo giocatore
-                                for (const auto& casella : caselle_giocatore3) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(3);
-                                    break;
-                                    }
-                                }
-
-                                // Verifica la presenza per il quarto giocatore
-                                for (const auto& casella : caselle_giocatore4) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(4);
-                                    break;
-                                    }
-                                }
-
-                                switch(giocatori_presenti_nella_casella.size()){
-                                case 0:
-                                    std::cout <<"|"<< board[i][n-1]<<"     |";
-                                    break;
-                                case 1:
-                                    std::cout <<"|"<< board[i][n-1]<<giocatori_presenti_nella_casella[0]<<"    |";
-                                    break;
-                                case 2:
-                                    std::cout <<"|"<< board[i][n-1]<<giocatori_presenti_nella_casella[0]<<giocatori_presenti_nella_casella[1]<<"   |";
-                                    break;
-                                case 3:
-                                    std::cout <<"|"<< board[i][n-1]<<giocatori_presenti_nella_casella[0]<<giocatori_presenti_nella_casella[1]<<giocatori_presenti_nella_casella[2]<<"  |";
-                                    break;
-                                case 4:
-                                    std::cout <<"|"<< board[i][n-1]<<giocatori_presenti_nella_casella[0]<<giocatori_presenti_nella_casella[1]<<giocatori_presenti_nella_casella[2]<<giocatori_presenti_nella_casella[3]<<" |";
-                                    break;
-
-                                }
-                             }
-                            }
-                            std::cout << std::endl;
-
+                    if (x_giocatore == board[i][n - 1].get_position().get_x() &&
+                        y_giocatore == board[i][n - 1].get_position().get_y()) {
+                        giocatori_presenti_nella_casella.push_back(giocatore_index + 1);
+                    }
                 }
-    }
+
+                // Stampa la casella con i giocatori presenti
+                switch (giocatori_presenti_nella_casella.size()) {
+                case 0:
+                    std::cout << "|" << board[i][n - 1] << "     |";
+                    break;
+                case 1:
+                    std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << "    |";
+                    break;
+                case 2:
+                    std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << "   |";
+                    break;
+                case 3:
+                    std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << giocatori_presenti_nella_casella[2] << "  |";
+                    break;
+                case 4:
+                    std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << giocatori_presenti_nella_casella[2] << giocatori_presenti_nella_casella[3] << " |";
+                    break;
+                }
+            }
+        }
+        std::cout << std::endl;
+}
+
 
 
 void Game::move_player(Player* pippo){
@@ -176,7 +156,27 @@ void Game::move_player(Player* pippo){
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
+        if(pippo->get_steps()%28 ==0){
+            pippo->ricevi(20);
+        }
         passi--;
+    }
+}
+
+void Game::move_robot(Player* pippo){
+    std::srand(static_cast<int>(std::time(nullptr)));
+    int prob= std::rand() %4;
+    if(prob==1){
+        Dadi dado;
+    int passi= dado.lancio();
+    while(passi>0){
+        pippo->set_position(pippo->get_position().next_position());
+        pippo->add_steps(1);
+        if(pippo->get_steps()%28 ==0){
+            pippo->ricevi(20);
+        }
+        passi--;
+    }
     }
 }
 
