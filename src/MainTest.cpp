@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     // [argc e argv -> Lovato Emanuele]
     // Controllo non vi sia più di un argomento oltre al comando dell'eseguibile.
-    if (argc != 2) {
+    /*if (argc != 2) {
         cout << "Argomento dell'eseguibile errato.\n";
         cout << "    Cortesemente, utilizza: \n    " << argv[0] << " [tipologia_giocatore: \"computer\" o \"human\"]\n";
         return 1;       // Se non vi è uno ed uno solo argomento addizionale, esci dal programma ritornando 1.
@@ -22,17 +22,17 @@ int main(int argc, char* argv[]) {
     // I valori a riga di comando vanno inseriti in minuscolo, stante la consegna del progetto.
     if(string(argv[1]) == "computer") {
         partita_umana = false;
-    } 
+    }
     else if(string(argv[1]) == "human") {
         partita_umana = true;
-    } 
+    }
     else {
         cout << "Tipologia di giocatore errata.\n";
         cout << "    Cortesemente, utilizza: \n    " << argv[0] << " [tipologia_giocatore: \"computer\" o \"human\"]\n";
         return 1;
     }
     // end [argc e argv -> Lovato Emanuele]
-
+*/
     Board b;
     b.print_board();
     Casella start= b.get_starting_cell();

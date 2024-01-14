@@ -12,11 +12,9 @@
 
 Game::Game(): turno {1} {
     board= tabellone.get_board();
-    Player* giocatore1 = new Player(1);
     Player* giocatore2 = new Player(2);
     Player* giocatore3 = new Player(3);
     Player* giocatore4 = new Player(4);
-    add_giocatore(giocatore1);
     add_giocatore(giocatore2);
     add_giocatore(giocatore3);
     add_giocatore(giocatore4);
@@ -121,7 +119,7 @@ void Game::print_gameboard_line(int n) {
 
                     if (x_giocatore == board[i][n - 1].get_position().get_x() &&
                         y_giocatore == board[i][n - 1].get_position().get_y()) {
-                        giocatori_presenti_nella_casella.push_back(giocatore_index + 1);
+                        giocatori_presenti_nella_casella.push_back(giocatori[giocatore_index]->get_nome());
                     }
                 }
 
