@@ -20,6 +20,7 @@ Game::Game(): turno {1} {
 }
 
 void Game::add_giocatore(Player* pippo) {
+    pippo->set_position(tabellone.get_starting_cell().get_position());
     giocatori.push_back(pippo);
 }
 
@@ -167,6 +168,14 @@ void Game::print_gameboard_line(int n){
     }
 }
 
+void Game::move_player(Player* pippo){
+    Dadi dado;
+    int passi= dado.lancio();
+    while(passi>0){
+        pippo->set_position(pippo->get_position().next_position());
+        passi--;
+    }
+}
 
 /*
 Game_Umano::Game_Umano() : Game(n) {

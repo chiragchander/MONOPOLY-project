@@ -25,6 +25,7 @@ public:
     bool fine_gioco();
     Player* vincitore();
     void print_gameboard();
+    void move_player(Player* pippo);
 };
 
 

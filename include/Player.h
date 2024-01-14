@@ -3,6 +3,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <vector>
+#include "Posizione.h"
 //#include "Casella.h"
 class Casella;
 class Player {
@@ -12,6 +13,7 @@ private:
     std::vector<Casella*> proprie;         // serve a legare le casella possedute al giocatore che le possiede
     bool vivo = true;
     int passi; //Indica i passi effettuati dal giocatore
+    Posizione position;
 public:
     Player(int n);
     int get_nome() const { return nome; }       // LLL serve nel logger per stampare
@@ -25,6 +27,8 @@ public:
     bool compra_casella(Casella* c);    // Ritorna true se la casella è acquistata, false se non possiede abbastanza soldi
     std::vector<Casella*> get_proprie() { return proprie; }        // LLL questo serve nel logger per stampare le caselle del giocatore
     bool operator==(const Player& other) const {return nome==other.get_nome();}
+    Posizione get_position(){return position;}
+    void set_position(Posizione pos){ position.set_position(pos);}
 };
 
 #endif

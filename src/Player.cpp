@@ -4,6 +4,7 @@
 
 Player::Player(int n)
     : nome{n}, budget{100}, vivo{true}, proprie{nullptr} {
+
 }
 
 bool Player::povero() {
