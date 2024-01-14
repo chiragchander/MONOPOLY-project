@@ -92,13 +92,13 @@ Player* Game::vincitore() {
 }
 
 void Game::print_gameboard(){
-    for(int i=0; i<=8; i++){
+        tabellone.print_line(0);
+    for(int i=1; i<=8; i++){
         print_gameboard_line(i);
     }
 }
 
 void Game::print_gameboard_line(int n) {
-
         std::vector<int> giocatori_presenti_nella_casella;
         std::vector<std::pair<int, int>> posizioni_giocatori;
         for (const auto& giocatore : giocatori) {
@@ -107,7 +107,7 @@ void Game::print_gameboard_line(int n) {
             posizioni_giocatori.push_back(std::make_pair(x, y));
         }
 
-        std::cout << alphabet[n - 1] << "   ";
+        std::cout << alphabet[n-1] << "   ";
         for (int i = 0; i < 8; i++) {
             if (board[i][n - 1].is_central_cell()) {
                 std::cout << "        ";
