@@ -2,6 +2,10 @@
 #include "../include/Casella.h"
 #include "../include/Board.h"
 #include "../include/Dadi.h"
+#include "../include/Game.h"
+#include "../include/Player.h"
+#include <memory>
+
 
 using namespace std;
 
@@ -26,6 +30,11 @@ int main() {
     cout << "Lancio: " << ddd.lancio() << "\n";
     cout << ddd;
     ddd.stampa_quadro();
+    Game g;
+
+
+    g.print_gameboard();
+
 
     return 0;
 }

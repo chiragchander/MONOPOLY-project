@@ -3,8 +3,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <vector>
-#include "Casella.h"
-
+//#include "Casella.h"
+class Casella;
 class Player {
 private:
     int nome;   // Nome è l'indice del giocatore, che stante le specifiche sarà un valore da 1 a 4.

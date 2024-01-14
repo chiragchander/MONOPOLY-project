@@ -1,5 +1,6 @@
 // Lovato Emanuele
 #include "../include/Player.h"
+#include "../include/Casella.h"
 
 Player::Player(int n)
     : nome{n}, budget{100}, vivo{true}, proprie{nullptr} {

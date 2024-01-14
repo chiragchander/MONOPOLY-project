@@ -20,6 +20,7 @@ public:
     int get_lvl() const { return lvl; }   // Restituisce il livello della casella
 
     void set_type(int new_type) { type = new_type; } // Assegna un tipo nuovo alla casella (forse non servirà)
+    void set_lvl(int new_lvl) { lvl = new_lvl; } // Assegna un tipo nuovo alla casella (forse non servirà)
     void upgrade(); // Migliora, se possibile, il livello della casella
 
     int price() const;   // Restituisce il prezzo per l'acquisto del terreno e se gia acquistato per miglioramento a casa e albergo

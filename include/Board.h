@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "Casella.h"
-// #include "Player.h"
 
 class Board {
 private:
@@ -17,7 +16,6 @@ private:
 
 	Casella starting_cell;
 	// std::vector<Player> players;
-	void print_line(int n) ;
 
 public:
 	Board();
@@ -28,11 +26,8 @@ public:
     int get_starting_col(){return starting_cell.get_position().get_y();};
     int laps(){return (count/28);};
     std::vector<std::vector<Casella>> get_board(){return board;};
-    /*
-    void add_player(Player& p)  {players.push_back(p)};
+    void print_line(int n);
 
-    */
-    void print_test();
 
 };//Board
 
