@@ -51,3 +51,4 @@ bool Posizione::operator==(const Posizione other){
 std::ostream& operator<<(std::ostream& os, Posizione pos){
         return os <<"("<<pos.get_x()<<";"<<pos.get_y()<<")";
 }//operator<<
+

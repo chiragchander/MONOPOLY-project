@@ -2,17 +2,25 @@
 
 #include "../include/Game.h"
 #include "../include/Dadi.h"        // Serve solo nella funzione intro()
+#include <algorithm>
 
-Game::Game() 
+
+
+Game::Game()
     : turno {1} {
 }
 
 void Game::add_giocatore(Player* pippo) {
-    giocatori.push_back(pippo);
+    giocatori.push_back(*pippo);
 }
 
 void Game::del_giocatore(Player* pippo) {
-    giocatori.erase(pippo);     // @@@ controllare che elimini correttamente
+    auto it = std::find(giocatori.begin(), giocatori.end(), *pippo);
+    if (it != giocatori.end()) {
+        giocatori.erase(it);
+    }
+    // @@@ controllare che elimini correttamente
+
     // CCC rimuovere dal tabellone tutte le caselle e proprietà del giocatore
 }
 
@@ -56,7 +64,7 @@ Player* Game::vincitore() {
             temp = i;
         }
     }
-    return giocatori[temp];
+    return &giocatori[temp];
     // @@@ il problema è quando vi saranno due primi ex-equo, che va implementato.
 }
 
@@ -65,3 +73,4 @@ Player* Game::vincitore() {
 Game_Umano::Game_Umano() : Game(n) {
 }
 */
+

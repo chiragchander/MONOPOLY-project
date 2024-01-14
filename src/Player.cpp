@@ -1,8 +1,7 @@
 // Lovato Emanuele
-
 #include "../include/Player.h"
 
-Player::Player(int n) 
+Player::Player(int n)
     : nome{n}, budget{100}, vivo{true}, proprie{nullptr} {
 }
 
@@ -17,6 +16,11 @@ void Player::paga(int monete) {
 void Player::ricevi(int monete) {
     budget += monete;
 }
+
+void Player::add_steps(int n){
+    passi +=n;
+}
+
 
 bool Player::compra_casella(Casella* c) {
     int costo = c->price();     // Costo della casella da acquistare

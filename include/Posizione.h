@@ -19,7 +19,6 @@ public:
     void print_position();
     Posizione next_position();
 
-
     Posizione& operator=(const Posizione& other);// Overloading Operatore =
     bool operator==(const Posizione other);//Overloading Operatore ==
 };
