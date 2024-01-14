@@ -98,14 +98,9 @@ void Game::print_gameboard(){
 }
 
 void Game::print_gameboard_line(int n) {
-    if (giocatori.empty()) {
-        tabellone.print_line(n);
-    } else {
-        //tabellone.print_line(0);
+
         std::vector<int> giocatori_presenti_nella_casella;
         std::vector<std::pair<int, int>> posizioni_giocatori;
-
-        // Raccogli tutte le posizioni dei giocatori una volta sola
         for (const auto& giocatore : giocatori) {
             int x = giocatore->get_position().get_x();
             int y = giocatore->get_position().get_y();
@@ -151,7 +146,6 @@ void Game::print_gameboard_line(int n) {
             }
         }
         std::cout << std::endl;
-    }
 }
 
 
