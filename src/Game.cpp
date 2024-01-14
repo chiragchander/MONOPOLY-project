@@ -5,6 +5,8 @@
 #include "../include/Player.h"
 #include "../include/Dadi.h"        // Serve solo nella funzione intro()
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 
 
@@ -100,49 +102,23 @@ void Game::print_gameboard_line(int n){
     else{
 
                 tabellone.print_line(0);
-                std::vector<Casella*> caselle_giocatore1 = giocatori[0]->get_proprie();
-                std::vector<Casella*> caselle_giocatore2 = giocatori[1]->get_proprie();
-                std::vector<Casella*> caselle_giocatore3 = giocatori[2]->get_proprie();
-                std::vector<Casella*> caselle_giocatore4 = giocatori[3]->get_proprie();
                 std::vector<int> giocatori_presenti_nella_casella;
 
-                            std::cout << alphabet[n-1] << "   ";
-                            for(int i = 0; i < 8; i++) {
-                            if(board[i][n-1].is_central_cell()) std::cout<<"        ";
+                std::cout << alphabet[n-1] << "   ";
+                for(int i = 0; i < 8; i++) {
+                    if(board[i][n-1].is_central_cell()) std::cout<<"        ";
 
-                            else{
+                    else{
 
-                                // Verifica la presenza per il primo giocatore
-                                for (const auto& casella : caselle_giocatore1) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(1);
-                                    break;
-                                    }
+                        for (int giocatore_index = 0; giocatore_index < giocatori.size(); ++giocatore_index) {
+                        const std::vector<Casella*>& caselle_giocatore = giocatori[giocatore_index]->get_proprie();
+                            for (const auto& casella : caselle_giocatore) {
+                                if (casella->get_position() == board[i][n-1].get_position()) {
+                                giocatori_presenti_nella_casella.push_back(giocatore_index + 1);
+                                break;
                                 }
-
-                                // Verifica la presenza per il secondo giocatore
-                                for (const auto& casella : caselle_giocatore2) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(2);
-                                    break;
-                                    }
-                                }
-
-                                // Verifica la presenza per il terzo giocatore
-                                for (const auto& casella : caselle_giocatore3) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(3);
-                                    break;
-                                    }
-                                }
-
-                                // Verifica la presenza per il quarto giocatore
-                                for (const auto& casella : caselle_giocatore4) {
-                                    if (casella->get_position() == board[i][n-1].get_position()) {
-                                    giocatori_presenti_nella_casella.push_back(4);
-                                    break;
-                                    }
-                                }
+                            }
+                        }
 
                                 switch(giocatori_presenti_nella_casella.size()){
                                 case 0:
@@ -176,7 +152,27 @@ void Game::move_player(Player* pippo){
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
+        if(pippo->get_steps()%28 ==0){
+            pippo->ricevi(20);
+        }
         passi--;
+    }
+}
+
+void Game::move_robot(Player* pippo){
+    std::srand(static_cast<int>(std::time(nullptr)));
+    int prob= std::rand() %4;
+    if(prob==1){
+        Dadi dado;
+    int passi= dado.lancio();
+    while(passi>0){
+        pippo->set_position(pippo->get_position().next_position());
+        pippo->add_steps(1);
+        if(pippo->get_steps()%28 ==0){
+            pippo->ricevi(20);
+        }
+        passi--;
+    }
     }
 }
 

@@ -27,6 +27,7 @@ public:
     Player* vincitore();
     void print_gameboard();
     void move_player(Player* pippo);
+    void move_robot(Player* pippo);
 };
 
 
