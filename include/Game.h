@@ -13,6 +13,7 @@ protected:
     // LLL aggiungerei un oggetto Logger per dare in gestione gli eventi da stampare
     Board tabellone;
     std::vector<std::vector<Casella>> board;
+    const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
     void print_gameboard_line(int n);
 public:
     Game();

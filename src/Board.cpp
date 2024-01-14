@@ -84,16 +84,6 @@ void Board::print_line(int n) {
         for(int i = 0; i < col_size; i++) {
             if(board[i][n-1].is_central_cell()) std::cout<<"        ";
             else {
-                std::vector<int> test;
-                std::vector<int> giocatori_presenti_nella_casella; //in cui faccio push_back i giocatori nella casella
-                /*
-                QUESTO ALGORITMO VERRA' REALIZZATO DIRETTAMENTE NELLA CLASSE GAME, IN QUESTA CLASSE BASTA CHE VENGA STAMPATO IL TABELLONE
-                SENZA GIOCATORI
-                -da sostituire con un vettore di Player che indica i giocatori presenti nel tabellone
-                -invece di if(test.size()) devo valutare il numero di giocatori nella casella, tipo con un for
-                 in cui vedo se la posizione di board[i][n-1] � uguale alla posizione del giocatore */
-
-                if(test.size()==0){
                     switch(board[i][n-1].length()){
                     case 0:
                         std::cout <<"|      |";
@@ -106,28 +96,11 @@ void Board::print_line(int n) {
                         break;
                     }
                 }
-                else{
-                    switch(giocatori_presenti_nella_casella.size()){ /* test.size() da sostituire con una funzione che vede quanti giocatori
-                         sono presenti nella cella corrente, qui usato solo per valutare la logica della funzione  */
-                    case 1:
-                        std::cout <<"|"<< board[i][n-1]<<test[0]<<"    |";
-                        break;
-                    case 2:
-                        std::cout <<"|"<< board[i][n-1]<<test[0]<<test[1]<<"   |";
-                        break;
-                    case 3:
-                        std::cout <<"|"<< board[i][n-1]<<test[0]<<test[1]<<test[2]<<"  |";
-                        break;
-                    case 4:
-                        std::cout <<"|"<< board[i][n-1]<<test[0]<<test[1]<<test[2]<<test[3]<<" |";
-                        break;
-                    }
-                }
+
         }
         }
         std::cout << std::endl;
-    }
-}//print_line
+    }//print_line
 
 
 

@@ -9,7 +9,7 @@ void Posizione::set_position(int pos_x, int pos_y){
     y=pos_y;
 }//set_position
 
-Posizione Posizione::set_position(const Posizione& pos){
+void Posizione::set_position(Posizione pos){
     x=pos.get_x();
     y=pos.get_y();
 }
