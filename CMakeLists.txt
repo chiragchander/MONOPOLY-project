@@ -4,6 +4,14 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 project(monopoly)
 
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE Release)	# In caso di mancata specificazione, compila versione Release.
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")	# Flags comuni per mostrare i warning in compilazione.
+set(CMAKE_CXX_FLAGS_DEBUG "-g")		# Parametro -g serve per compilare includendo informazioni di debug.
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")	# Parametro -O2 del compilatore, per ottimizzazione.
+
 include_directories(include)
 
 add_executable(maintest
