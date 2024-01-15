@@ -516,16 +516,24 @@ void Game::print_gameboard_line(int n)
             	std::cout << centr(board[i][n - 1].to_string());
                 break;
             case 1:
+            	if(board[i][n - 1].to_string() != " "){
                 std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]));
+                } else std::cout << centr(std::to_string(giocatori_presenti_nella_casella[0]));
                 break;
             case 2:
+            	if(board[i][n - 1].to_string() != " "){
                 std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]));
+                } else std::cout << centr(std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]));
                 break;
             case 3:
+            	if(board[i][n - 1].to_string() != " "){
             	std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]));
+            	} else std::cout << centr(std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]));
                 break;
             case 4:
+            	if(board[i][n - 1].to_string() != " "){
             	std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]) + std::to_string(giocatori_presenti_nella_casella[3]));
+            	} else std::cout << centr(std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]) + std::to_string(giocatori_presenti_nella_casella[3]));
                 break;
             }
         }
