@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
                 else if (input_utente == "roll") { /////////////////////////////////////////////////////////DA SISTEMARE
                     // Lancia i dadi e prosegui.
                         logger.inizio_turno(gio_attuale->get_nome());
-                        game.move_player(gio_attuale);
+                        //game.move_player(gio_attuale);
 
                     break;
                 }
@@ -107,7 +107,8 @@ int main(int argc, char* argv[]) {
             // @@@ Decidere se visualizzare mostra board per giocatore computer e che altro visualizzare.
 
             // @@@ move_player e move_robot vanno cambiate radicalmente
-            game.move_robot(gio_attuale);
+            game.turno_robot(gio_attuale);
+            game.move_player(gio_attuale);
         }
 
         logger.fine_turno(gio_attuale->get_nome());

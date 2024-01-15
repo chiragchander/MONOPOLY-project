@@ -139,8 +139,10 @@ void Game::intro() {
 void Game::turno_robot(Player* pippo){
     Dadi d;
     ////////////LOGGER----->INIZIO TURNO ROBOT
-    move_robot(pippo);
+    std::cout<<"giocatore "<<pippo->get_nome()<< " inizia il turno"<<std::endl ;
+    move_player(pippo);
     ////////////LOGGER----->MOVIMENTO ROBOT
+
     //casella angolare, non faccio niente e il turno termina
     if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_angolo()){
         //LOGGER---> FINE TURNO
@@ -154,13 +156,19 @@ void Game::turno_robot(Player* pippo){
 
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
+
+                std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
             }
             else{
                 ///LOGGER FINE TURNO
+                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
             }
         }
         else   {
             ///LOGGER FINE TURNO
+            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
         }
     }
     //terreno di proprietà, posso migliorare a casa
@@ -171,13 +179,19 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
+                                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
+
             }
             else{
                 ///LOGGER FINE TURNO
+                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
             }
         }
         else   {
             ///LOGGER FINE TURNO
+                            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
         }
     }
     //terreno di proprietà, posso migliorare ad albergo
@@ -188,13 +202,19 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
+                            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
+
             }
             else{
                 ///LOGGER FINE TURNO
+                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
             }
         }
         else   {
             ///LOGGER FINE TURNO
+                            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
         }
     }
     //casa di un altro giocatore, pago il pernottamento
@@ -206,9 +226,13 @@ void Game::turno_robot(Player* pippo){
             //pippo paga a giocatore 2, giocatore 2 riceve
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+                            std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
+
             }
             else{
                 ///LOGGER GAME OVER ROBOT
+                                std::cout<<"giocatore "<<pippo->get_nome()<< " eliminato"<<std::endl ;
+
                 giocatore_over(pippo);
                 get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());
 
@@ -309,6 +333,7 @@ void Game::print_gameboard_line(int n) {
 void Game::move_player(Player* pippo){
     Dadi dado;
     int passi= dado.lancio();
+    int num=passi;
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
@@ -317,23 +342,7 @@ void Game::move_player(Player* pippo){
         }
         passi--;
     }
-}
-
-void Game::move_robot(Player* pippo){
-    std::srand(static_cast<int>(std::time(nullptr)));
-    int prob= std::rand() %4;
-    if(prob==1){
-        Dadi dado;
-    int passi= dado.lancio();
-    while(passi>0){
-        pippo->set_position(pippo->get_position().next_position());
-        pippo->add_steps(1);
-        if(pippo->get_steps()%28 ==0){
-            pippo->ricevi(20);
-        }
-        passi--;
-    }
-    }
+    std::cout<<"il giocatore "<<pippo->get_nome()<<" si e' mosso di "<<num<<" passi"<<std::endl;
 }
 
 /*
