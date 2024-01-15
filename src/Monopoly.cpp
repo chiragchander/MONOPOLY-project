@@ -67,38 +67,9 @@ int main(int argc, char* argv[]) {
             cout << "Umano, attendo un tuo comando!\n";
 
             do {
-                cout << "    <#> Accetto solamente \"show\" o \"roll\".\n";
-                cin >> input_utente;
-
-                // Controlla il comando ed eventualmente eseguine l'azione.
-                if (input_utente == "show") {
-                    // Mostra dati della partita, come da consegna.
-
-                    /* @@@, implementata funzioni game VISUALIZZA, ne scrivo qui alcune similari al volo, da migliorare
-                        - tabellone
-                        - lista terreni/case/alberghi posseduti da ogni giocatore
-                        - ammontare di fiorini posseduto da tutti i giocatori
-                    */
-                    // tabellone
-                    game.print_gameboard();
-                    // lista proprieta' e fiorini
-                    for(int i=0; i < totale_gio; i++) {
-                        Player* gio_temp = game.get_giocatori(i);
-                        cout << "Giocatore " << gio_temp->get_nome() << " ha le caselle:\n";
-                        gio_temp->print_proprie();
-                        cout << "Inoltre tale Giocatore ha " << gio_temp->get_budget() << " fiorini.\n\n";
-                    }
-                }
-                else if (input_utente == "roll") { /////////////////////////////////////////////////////////DA SISTEMARE
-                    // Lancia i dadi e prosegui.
-                        logger.inizio_turno(gio_attuale->get_nome());
-                        game.move_player(gio_attuale);
-
+                    logger.inizio_turno(gio_attuale->get_nome());
+                    game.turno_human(gio_attuale);
                     break;
-                }
-                else {
-                    cout << "Comando non accettato: cortesemente, ripeti l'inserimento.\n";
-                }
             } while(true);
         }
         // Else tipologia partita computer o partita human con turno giocatori computer.

@@ -1,11 +1,13 @@
 // Lovato Emanuele
 
 #include "../include/Dadi.h"
+#include <cstdlib>  // rand() & srand()
+#include <ctime>    // time()
 
 // Nel costruttore, inserisco il seme per la randomizzazione basata sul tempo.
 // Altrimenti i numeri sono pseudo-casuali, ogni ripetizione si giungerebbe al medesimo risultato.
 Dadi::Dadi() {
-    srand(time(NULL));
+    std::srand(time(NULL));
 }
 
 // Lancia e genera un nuovo valore attuale, ritornando nel caso possa servire, la somma del nuovo lancio.
@@ -16,17 +18,6 @@ int Dadi::lancio() {
     return somma;
 }
 
-
-int Dadi::lancio_robot() {
-    dado_robot= rand() %4 + 1;
-        if(dado_robot==1){
-        dado1 = rand() % 6 + 1;
-        dado2 = rand() % 6 + 1;
-        somma = dado1 + dado2;
-        return somma;
-    }
-    return 0;
-}
 
 // Funzione che può essere utilizzata per un output graficamente accettabile in-game.
 // Tale stampa va differenziata lievemente tra somme ad una o a due cifre.

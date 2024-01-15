@@ -34,6 +34,7 @@ public:
     std::vector<int> order_players();
     Player* get_player_from_index(int n);
     void turno_robot(Player* pippo);
+    void turno_human(Player* pippo);
 
 };
 
