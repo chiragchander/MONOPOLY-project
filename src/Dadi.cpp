@@ -1,19 +1,18 @@
 // Lovato Emanuele
 
 #include "../include/Dadi.h"
-#include <cstdlib>  // rand() & srand()
-#include <ctime>    // time()
+#include <random>
 
 // Nel costruttore, inserisco il seme per la randomizzazione basata sul tempo.
 // Altrimenti i numeri sono pseudo-casuali, ogni ripetizione si giungerebbe al medesimo risultato.
-Dadi::Dadi() {
-    std::srand(time(NULL));
+Dadi::Dadi() : gen(std::random_device()()), distribution(1, 6) {
+
 }
 
 // Lancia e genera un nuovo valore attuale, ritornando nel caso possa servire, la somma del nuovo lancio.
 int Dadi::lancio() {
-    dado1 = rand() % 6 + 1;
-    dado2 = rand() % 6 + 1;
+    dado1 = distribution(gen);
+    dado2 = distribution(gen);
     somma = dado1 + dado2;
     return somma;
 }

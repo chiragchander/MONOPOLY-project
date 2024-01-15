@@ -6,8 +6,7 @@
 #include "../include/Dadi.h"        // Serve solo nella funzione intro()
 #include "../include/Logger.h"        // Serve solo nella funzione intro()
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 
 
 
@@ -398,6 +397,9 @@ void Game::turno_human(Player* pippo){
     }
 
     }
+    else {
+                    cout << "Comando non accettato: cortesemente, ripeti l'inserimento.\n";
+                }
 
 log.fine_turno(pippo->get_nome());
 
@@ -502,7 +504,7 @@ void Game::print_gameboard_line(int n) {
 void Game::move_player(Player* pippo){
     Dadi dado;
     int passi= dado.lancio();
-    int num=passi;
+    int count=passi;
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
@@ -511,7 +513,7 @@ void Game::move_player(Player* pippo){
         }
         passi--;
     }
-    std::cout<<"il giocatore "<<pippo->get_nome()<<" si e' mosso di "<<num<<" passi"<<std::endl;
+    std::cout<<"il giocatore "<<pippo->get_nome()<<" si e' mosso di "<<count<<" passi"<<std::endl;
         log.posizione(pippo->get_nome(),pippo->get_position().position_to_string());
 
 }

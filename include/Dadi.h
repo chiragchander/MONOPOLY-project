@@ -3,14 +3,15 @@
 #ifndef DADI_H
 #define DADI_H
 #include <iostream>
-#include <cstdlib>  // rand() & srand()
-#include <ctime>    // time()
+#include <random>
 
 class Dadi {
 private:
     int dado1 = 1;
     int dado2 = 1;
     int somma = 0;
+    std::mt19937 gen;
+    std::uniform_int_distribution<int> distribution;
 public:
     Dadi();
     int lancio();
