@@ -19,6 +19,24 @@ Game::Game() : turno{1}
     add_giocatore(giocatore2);
     add_giocatore(giocatore3);
     add_giocatore(giocatore4);
+    log.set_nome_file("log_computer.txt");
+    log.nuovo_f();
+}
+
+Game::Game(std::string s) : turno{1}
+{
+    board = tabellone.get_board();
+    Player *giocatore1 = new Player(1);
+    Player *giocatore2 = new Player(2);
+    Player *giocatore3 = new Player(3);
+    Player *giocatore4 = new Player(4);
+    add_giocatore(giocatore1);
+    add_giocatore(giocatore2);
+    add_giocatore(giocatore3);
+    add_giocatore(giocatore4);
+    log.set_nome_file(s);
+    log.nuovo_f();
+
 }
 
 void Game::add_giocatore(Player *pippo)
@@ -153,7 +171,6 @@ void Game::turno_robot(Player *pippo)
 {
     log.inizio_turno(pippo->get_nome());
     Dadi d;
-    std::cout << "giocatore " << pippo->get_nome() << " inizia il turno" << std::endl;
     move_player(pippo);
 
     // casella angolare, non faccio niente e il turno termina
@@ -174,17 +191,14 @@ void Game::turno_robot(Player *pippo)
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
 
-                std::cout << "giocatore " << pippo->get_nome() << " compra terreno" << std::endl;
                 log.acq_ter(pippo->get_nome(), pippo->get_position().position_to_string());
             }
             else
             {
-                std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
             }
         }
         else
         {
-            std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
         }
     }
     // terreno di proprietà, posso migliorare a casa
@@ -199,16 +213,13 @@ void Game::turno_robot(Player *pippo)
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
                 log.costr_casa(pippo->get_nome(), pippo->get_position().position_to_string());
-                std::cout << "giocatore " << pippo->get_nome() << " migliora terreno in casa" << std::endl;
             }
             else
             {
-                std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
             }
         }
         else
         {
-            std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
         }
     }
     // terreno di proprietà, posso migliorare ad albergo
@@ -223,17 +234,14 @@ void Game::turno_robot(Player *pippo)
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
                 log.costr_alb(pippo->get_nome(), pippo->get_position().position_to_string());
-                std::cout << "giocatore " << pippo->get_nome() << " migliora casa in albergo" << std::endl;
             }
             else
             {
                 /// LOGGER FINE TURNO
-                std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
             }
         }
         else
         {
-            std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
         }
     }
     // casa di un altro giocatore, pago il pernottamento
@@ -248,13 +256,11 @@ void Game::turno_robot(Player *pippo)
             // pippo paga a giocatore 2, giocatore 2 riceve
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-            std::cout << "giocatore " << pippo->get_nome() << " paga pernottamento" << std::endl;
             log.pag_ped(pippo->get_nome(), get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->get_nome(), board[pippo->get_position().get_x()][pippo->get_position().get_y()].price(), pippo->get_position().position_to_string());
         }
         else
         {
             /// LOGGER GAME OVER ROBOT
-            std::cout << "giocatore " << pippo->get_nome() << " eliminato" << std::endl;
 
             giocatore_over(pippo);
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());
@@ -318,20 +324,17 @@ void Game::turno_human(Player *pippo)
                     {
                         pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                         board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
-                        std::cout << "giocatore " << pippo->get_nome() << " compra terreno" << std::endl;
                         log.acq_ter(pippo->get_nome(), pippo->get_position().position_to_string());
                     }
                     else if (answer == 'N')
                     {
                         /// LOGGER FINE TURNO
-                        std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                     }
                     // DA GESTIRE QUANDO SI INSERISCE IL CARATTERE SBAGLIATO
                 }
                 else
                 {
                     /// LOGGER FINE TURNO
-                    std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                 }
             }
 
@@ -350,19 +353,16 @@ void Game::turno_human(Player *pippo)
                     {
                         pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                         board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                        std::cout << "giocatore " << pippo->get_nome() << " migliora terreno in casa" << std::endl;
                         log.costr_casa(pippo->get_nome(), pippo->get_position().position_to_string());
                     }
                     else if (answer == 'N')
                     {
                         /// LOGGER FINE TURNO
-                        std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                     }
                 }
                 else
                 {
                     /// LOGGER FINE TURNO
-                    std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                 }
             }
 
@@ -382,20 +382,17 @@ void Game::turno_human(Player *pippo)
 
                         pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                         board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                        std::cout << "giocatore " << pippo->get_nome() << " migliora casa in albergo" << std::endl;
                         log.costr_alb(pippo->get_nome(), pippo->get_position().position_to_string());
                     }
                     else if (answer == 'N')
                     {
                         /// LOGGER FINE TURNO
-                        std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                     }
                 }
 
                 else
                 {
                     /// LOGGER FINE TURNO
-                    std::cout << "giocatore " << pippo->get_nome() << " finisce il turno" << std::endl;
                 }
             }
 
@@ -411,13 +408,11 @@ void Game::turno_human(Player *pippo)
                     // pippo paga a giocatore 2, giocatore 2 riceve
                     pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                     get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-                    std::cout << "giocatore " << pippo->get_nome() << " paga pernottamento" << std::endl;
                     log.pag_ped(pippo->get_nome(), get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->get_nome(), board[pippo->get_position().get_x()][pippo->get_position().get_y()].price(), pippo->get_position().position_to_string());
                 }
                 else
                 {
                     /// LOGGER GAME OVER ROBOT
-                    std::cout << "giocatore " << pippo->get_nome() << " eliminato" << std::endl;
 
                     giocatore_over(pippo);
                     get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());

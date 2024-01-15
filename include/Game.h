@@ -39,17 +39,4 @@ public:
 
 };
 
-
-
-
-/*
-class Game_Umano: public Game {
-private:
-    int play_umano; // da 0 a 3 indica il giocatore umano nell'array lista_play[4]
-public:
-    Game_Umano();
-    int get_pos_umano() const { return play_umano; }
-};
-*/
-
 #endif
