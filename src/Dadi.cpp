@@ -41,8 +41,7 @@ std::ostream& operator<<(std::ostream& os, const Dadi& d) {
 // Scelta per giocatore computer in base alla percentuale.
 // Al 25% compra il terreno.
 bool Dadi::scelta_percento() {
-    int percento;
-    percento = rand() % 4;
-    if(percento == 0) return true;
-    else return false;
+    std::uniform_int_distribution<int> distribution(0, 3);
+    int percento = distribution(gen);
+    return (percento == 0);
 }
