@@ -3,3 +3,6 @@ monopoli-cc.depend
 monopoli-cc.layout
 bin/
 obj/
+log.txt
+log_computer.txt
+log_human.txt
