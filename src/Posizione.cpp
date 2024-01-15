@@ -1,5 +1,6 @@
 //chirag chander
 #include "../include/Posizione.h"
+#include <vector>
 
 Posizione::Posizione():x(0),y(0) {}
 Posizione::Posizione(int pos_x, int pos_y):x(pos_x), y(pos_y) {}
@@ -51,4 +52,11 @@ bool Posizione::operator==(const Posizione other){
 std::ostream& operator<<(std::ostream& os, Posizione pos){
         return os <<"("<<pos.get_x()<<";"<<pos.get_y()<<")";
 }//operator<<
+
+std::string Posizione::position_to_string(){
+    std::string s;
+    const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
+    s = alphabet[x] + std::to_string(y +1);
+    return s;
+}//position_to_string
 

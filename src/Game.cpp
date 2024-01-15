@@ -30,6 +30,7 @@ void Game::add_giocatore(Player* pippo) {
 }
 
 void Game::del_giocatore(Player* pippo) {
+    log.elimin(pippo->get_nome());
     auto it = std::find_if(giocatori.begin(), giocatori.end(), [pippo](const Player* player) {
         return *player == *pippo;
     });
@@ -132,16 +133,14 @@ void Game::intro() {
         return std::find(ordine.begin(), ordine.end(), indice_a) < std::find(ordine.begin(), ordine.end(), indice_b);
     });
 
-
-    // LLL aggiornerei logger per avvisare dell'ordine dei giocatori
+    log.ordine_giocatori(ordine);
 }
 
 void Game::turno_robot(Player* pippo){
+    log.inizio_turno(pippo->get_nome());
     Dadi d;
-    ////////////LOGGER----->INIZIO TURNO ROBOT
     std::cout<<"giocatore "<<pippo->get_nome()<< " inizia il turno"<<std::endl ;
     move_player(pippo);
-    ////////////LOGGER----->MOVIMENTO ROBOT
 
     //casella angolare, non faccio niente e il turno termina
     if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_angolo()){
@@ -158,15 +157,14 @@ void Game::turno_robot(Player* pippo){
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
 
                 std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
+            log.acq_ter(pippo->get_nome(),pippo->get_position().position_to_string());
             }
             else{
-                ///LOGGER FINE TURNO
                 std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
 
             }
         }
         else   {
-            ///LOGGER FINE TURNO
             std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
 
         }
@@ -179,17 +177,16 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
+                log.costr_casa(pippo->get_nome(), pippo->get_position().position_to_string());
+                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
 
             }
             else{
-                ///LOGGER FINE TURNO
                                 std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
 
             }
         }
         else   {
-            ///LOGGER FINE TURNO
                             std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
 
         }
@@ -202,8 +199,8 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
-
+            log.costr_alb(pippo->get_nome(),pippo->get_position().position_to_string());
+            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
             }
             else{
                 ///LOGGER FINE TURNO
@@ -212,8 +209,8 @@ void Game::turno_robot(Player* pippo){
             }
         }
         else   {
-            ///LOGGER FINE TURNO
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+
 
         }
     }
@@ -240,7 +237,7 @@ void Game::turno_robot(Player* pippo){
 
     }
 
-//LOGGER FINE TURNO
+log.fine_turno(pippo->get_nome());
 
 }
 
@@ -508,6 +505,8 @@ void Game::move_player(Player* pippo){
         passi--;
     }
     std::cout<<"il giocatore "<<pippo->get_nome()<<" si e' mosso di "<<num<<" passi"<<std::endl;
+        log.posizione(pippo->get_nome(),pippo->get_position().position_to_string());
+
 }
 
 /*
