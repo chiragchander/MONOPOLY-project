@@ -502,7 +502,7 @@ void Game::move_player(Player* pippo){
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
-        if(pippo->get_steps()%28 ==0){
+        if(pippo->get_steps()%28 ==0 && pippo->get_steps()>0){
             pippo->ricevi(20);
         }
         passi--;
