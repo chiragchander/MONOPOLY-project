@@ -505,6 +505,7 @@ void Game::move_player(Player* pippo){
     Dadi dado;
     int passi= dado.lancio();
     int count=passi;
+    log.lan_dadi(pippo->get_nome(),passi);
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
