@@ -23,7 +23,8 @@ void fine_turno(int g);
 void inizio_turno(int g);
 void pas_via(int g);
 void ordine_giocatori(vector<int> g);
-
+void set_nome_file(string s);
+void nuovo_f();
 
 };//Logger
 

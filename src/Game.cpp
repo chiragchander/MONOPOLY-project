@@ -20,6 +20,23 @@ Game::Game(): turno {1} {
     add_giocatore(giocatore2);
     add_giocatore(giocatore3);
     add_giocatore(giocatore4);
+    log.set_nome_file("log_computer.txt");
+    log.nuovo_f();
+
+}
+
+Game::Game(std::string s): turno {1} {
+    board= tabellone.get_board();
+    Player* giocatore1 = new Player(1);
+    Player* giocatore2 = new Player(2);
+    Player* giocatore3 = new Player(3);
+    Player* giocatore4 = new Player(4);
+    add_giocatore(giocatore1);
+    add_giocatore(giocatore2);
+    add_giocatore(giocatore3);
+    add_giocatore(giocatore4);
+    log.set_nome_file(s);
+    log.nuovo_f();
 
 }
 
