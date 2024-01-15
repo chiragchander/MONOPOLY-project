@@ -26,7 +26,7 @@ public:
     void del_giocatore(Player* pippo);
     void giocatore_over(Player* pippo);
     bool fine_gioco();
-    Player* vincitore();
+    std::vector<Player*> vincitori();
     Player* get_giocatori(int n) const { return giocatori[n]; }
     void print_gameboard();
     void move_player(Player* pippo);

@@ -259,16 +259,25 @@ bool Game::fine_gioco() {
     }
     else return false;
 }
+std::vector<Player*> Game::vincitori() {
+    std::vector<Player*> vincitori;
+        if (giocatori.empty()) {
+        return vincitori;
+    }
 
-Player* Game::vincitore() {
-    int temp = 0;
-    for(int i = 0; i < giocatori.size(); i++) {
-        if(giocatori[i]->get_budget() > giocatori[temp]->get_budget()) {
-            temp = i;
+    int massimo = giocatori[0]->get_budget();
+    for (int i = 1; i < giocatori.size(); i++) {
+        if (giocatori[i]->get_budget() > massimo) {
+            massimo = giocatori[i]->get_budget();
         }
     }
-    return giocatori[temp];
-    // @@@ il problema è quando vi saranno due primi ex-equo, che va implementato.
+    for (int i = 0; i < giocatori.size(); i++) {
+        if (giocatori[i]->get_budget() == massimo) {
+            vincitori.push_back(giocatori[i]);
+        }
+    }
+
+    return vincitori;
 }
 
 void Game::print_gameboard(){

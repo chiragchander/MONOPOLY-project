@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
                 else if (input_utente == "roll") { /////////////////////////////////////////////////////////DA SISTEMARE
                     // Lancia i dadi e prosegui.
                         logger.inizio_turno(gio_attuale->get_nome());
-                        //game.move_player(gio_attuale);
+                        game.move_player(gio_attuale);
 
                     break;
                 }
@@ -135,8 +135,10 @@ int main(int argc, char* argv[]) {
 
     // Calcola vincitori, che sia uno o più.
     // @@@ implementare più vincitori in caso di parità.
-    Player* vittorioso = game.vincitore();
-    logger.vince(vittorioso->get_nome());
+    vector<Player*> vincitori = game.vincitori();
+    for(int i=0; i<vincitori.size(); i++){
+            logger.vince(vincitori[i]->get_nome());
+    }
 
     return 0;
 }
