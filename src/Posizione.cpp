@@ -3,7 +3,9 @@
 #include <vector>
 
 Posizione::Posizione():x(0),y(0) {}
-Posizione::Posizione(int pos_x, int pos_y):x(pos_x), y(pos_y) {}
+Posizione::Posizione(int pos_x, int pos_y):x(pos_x), y(pos_y) {
+
+}//Posizione
 
 void Posizione::set_position(int pos_x, int pos_y){
     x=pos_x;
@@ -13,10 +15,9 @@ void Posizione::set_position(int pos_x, int pos_y){
 void Posizione::set_position(Posizione pos){
     x=pos.get_x();
     y=pos.get_y();
-}
-//set_position
+}//set_position
 
-void Posizione::print_position(){
+void Posizione::print_position() const{
     std::cout<<"("<<x<<","<<y<<")";
 }//print_position
 
@@ -24,7 +25,6 @@ void Posizione::print_position(){
 Posizione Posizione::next_position() {
     int nextX = x;
     int nextY = y;
-
     if (x == 0 && y < 7)
         nextY++;
     else if (y == 7 && x < 7)
@@ -33,7 +33,6 @@ Posizione Posizione::next_position() {
         nextY--;
     else if (y == 0 && x > 0)
         nextX--;
-
     return Posizione(nextX, nextY);
 }//next_position
 

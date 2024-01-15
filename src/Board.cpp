@@ -7,12 +7,10 @@
 #include <algorithm>
 
 Board::Board(){
-    srand((unsigned) time(NULL));//generatore numeri casuali
-    board.resize(row_size, std::vector<Casella>(col_size));/*inizializzazione tabellone
-                                                              con posizione iniziale casuale*/
-    //angles rappresenta le posizioni angolari
+    srand((unsigned) time(NULL));
+    board.resize(row_size, std::vector<Casella>(col_size)); //inizializzazione tabellone con posizione iniziale casuale
     std::vector<std::pair<int , int >> angles = {{0, 0}, {0, 7}, {7, 0}, {7, 7}};
-    //scelta casuale di un indice che sar� il punto di partenza
+    //scelta casuale di un indice che sarà il punto di partenza
     int start_index = std::rand() % angles.size();
     std::pair<int, int> start = angles[start_index];
     board[start.first][start.second] = Casella(1,0, Posizione(start.first, start.second));
@@ -29,17 +27,12 @@ Board::Board(){
             board[i][j] = Casella(0,-1, Posizione(i, j));
     }
     //riempimento caselle laterali, escluse le caselle angolari
-    std::vector<std::pair<int, int>> lateral_cells = {{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6},
-                                                      {7, 1}, {7, 2}, {7, 3}, {7, 4}, {7, 5}, {7, 6},
-                                                      {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0},
-                                                      {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}};
-    //funzione che "mescola" il vettore in modo casuale
+    std::vector<std::pair<int, int>> lateral_cells = {{0, 1}, {0, 2}, {0, 3}, {0, 4}, {0, 5}, {0, 6},{7, 1}, {7, 2}, {7, 3}, {7, 4}, {7, 5}, {7, 6},{1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0},{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}};
     std::random_shuffle(lateral_cells.begin(), lateral_cells.end());
     int e = 8;
     int s = 10;
     int l = 6;
-
-    //assegnamento della propriet� per ogni cella laterale
+    //assegnamento della proprietà per ogni cella laterale
     for (const std::pair<int, int>& pos : lateral_cells) {
         int x = pos.first;
         int y = pos.second;
@@ -63,44 +56,31 @@ std::ostream& operator<<(std::ostream& os, Board valore){
     }//operator<<
 
 
-void Board::move(Casella& c, int n) {
-    while (n > 0) {
-        c.set_position(c.get_position().next_position() );
-        count++;
-        n--;
-    }
-////////////////////////////////////////////////////////////////////////////
-    //si pu� togliere il cout
-    std::cout<<"fatti "<<count<<" passi"<<std::endl;
-}//move
-
 void Board::print_line(int n) {
     if(n == 0) {
-        std::cout << "     " << "1" << "       " << "2" << "       " << "3" << "       " << "4" << "       " << "5" << "       " << "6" << "       " << "7" <<
-        "       " << "8" << std::endl;
+        std::cout << "     " << "1" << "       " << "2" << "       " << "3" << "       " << "4" << "       " << "5" << "       " << "6" << "       " << "7" <<"       " << "8" << std::endl;
     }
     else {
-        std::cout << alphabet[n - 1] << "   ";
-        for(int i = 0; i < col_size; i++) {
-            if(board[i][n-1].is_central_cell()) std::cout<<"        ";
-            else {
-                    switch(board[i][n-1].length()){
-                    case 0:
-                        std::cout <<"|      |";
-                        break;
-                    case 1:
-                        std::cout <<"|"<< board[i][n-1]<<"     |";
-                        break;
-                    case 2:
-                        std::cout <<"|"<< board[i][n-1]<<"    |";
-                        break;
+            std::cout << alphabet[n - 1] << "   ";
+            for(int i = 0; i < col_size; i++) {
+                if(board[i][n-1].is_central_cell()) std::cout<<"        ";
+                else {
+                        switch(board[i][n-1].length()){
+                        case 0:
+                            std::cout <<"|      |";
+                            break;
+                        case 1:
+                            std::cout <<"|"<< board[i][n-1]<<"     |";
+                            break;
+                        case 2:
+                            std::cout <<"|"<< board[i][n-1]<<"    |";
+                            break;
+                        }
                     }
-                }
-
-        }
+            }
         }
         std::cout << std::endl;
-    }//print_line
+}//print_line
 
 
 
