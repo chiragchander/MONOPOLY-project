@@ -7,7 +7,7 @@
 class Casella;
 
 class Game {
-protected:
+private:
     int turno = 1;
     std::vector<Player*> giocatori;
     // LLL aggiungerei un oggetto Logger per dare in gestione gli eventi da stampare
@@ -25,6 +25,7 @@ public:
     void giocatore_over(Player* pippo);
     bool fine_gioco();
     Player* vincitore();
+    Player* get_giocatori(int n) const { return giocatori[n]; }
     void print_gameboard();
     void move_player(Player* pippo);
     void move_robot(Player* pippo);

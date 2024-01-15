@@ -10,8 +10,8 @@ class Player {
 private:
     int nome;   // Nome è l'indice del giocatore, che stante le specifiche sarà un valore da 1 a 4.
     int budget = 100;
-    std::vector<Casella*> proprie;         // serve a legare le casella possedute al giocatore che le possiede
-    bool vivo = true;
+    std::vector<Casella*> proprie;         // Serve a legare le casella possedute al giocatore che le possiede
+    bool vivo = true;   // @@@ Serve o basta povero()
     int passi; //Indica i passi effettuati dal giocatore
     Posizione position;
 public:
