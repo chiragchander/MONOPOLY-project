@@ -112,6 +112,13 @@ void Casella::print_position(){
         std::cout<<alphabet[position.get_x()]<<position.get_y() +1;
 }//print_position
 
+std::string Casella::position_to_string(){
+	std::string s;
+        const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
+        s = alphabet[position.get_x()] + std::to_string(position.get_y() +1);
+        return s;
+}//position_to_string
+
 void Casella::upgrade(){
         if(lvl>=1 && lvl<3)
             lvl++;

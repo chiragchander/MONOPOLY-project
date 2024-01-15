@@ -1,5 +1,6 @@
 //chirag chander
 #include "../include/Posizione.h"
+#include <vector>
 
 Posizione::Posizione():x(0),y(0) {}
 Posizione::Posizione(int pos_x, int pos_y):x(pos_x), y(pos_y) {}
@@ -18,6 +19,13 @@ void Posizione::set_position(Posizione pos){
 void Posizione::print_position(){
     std::cout<<"("<<x<<","<<y<<")";
 }//print_position
+
+std::string Posizione::position_to_string(){
+    std::string s;
+    const std::vector<char> alphabet{'A','B','C','D','E','F','G','H'};
+    s = alphabet[x] + std::to_string(y +1);
+    return s;
+}//position_to_string
 
 
 Posizione Posizione::next_position() {

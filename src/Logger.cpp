@@ -1,3 +1,4 @@
+//luca pianizzola
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -26,9 +27,9 @@ fout.close();
 return;
 }
 
-void Logger::posizione(int g, int c) {
+void Logger::posizione(int g, string c) {
 string s;
-s = "- Giocatore " + to_string(g) + " è arrivato alla casella " + to_string(c);
+s = "- Giocatore " + to_string(g) + " è arrivato alla casella " + c;
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;
@@ -36,9 +37,9 @@ fout.close();
 return;
 }
 
-void Logger::acq_ter(int g, int c) {
+void Logger::acq_ter(int g, string c) {
 string s;
-s = "- Giocatore " + to_string(g) + " ha acquistato il terreno " + to_string(c);
+s = "- Giocatore " + to_string(g) + " ha acquistato il terreno " + c;
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;
@@ -46,9 +47,9 @@ fout.close();
 return;
 }
 
-void Logger::costr_casa(int g, int c) {
+void Logger::costr_casa(int g, string c) {
 string s;
-s = "- Giocatore " + to_string(g) + " ha costruito una casa sul terreno " + to_string(c);
+s = "- Giocatore " + to_string(g) + " ha costruito una casa sul terreno " + c;
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;
@@ -56,9 +57,9 @@ fout.close();
 return;
 }
 
-void Logger::costr_alb(int g, int c) {
+void Logger::costr_alb(int g, string c) {
 string s;
-s = "- Giocatore " + to_string(g) + " migliorato una casa in albergo sul terreno " + to_string(c);
+s = "- Giocatore " + to_string(g) + " migliorato una casa in albergo sul terreno " + c;
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;
@@ -66,9 +67,9 @@ fout.close();
 return;
 }
 
-void Logger::pag_ped(int g1, int g2, int f, int c) {
+void Logger::pag_ped(int g1, int g2, int f, string c) {
 string s;
-s = "- Giocatore " + to_string(g1) + " ha pagato " + to_string(f) + " fiorini a giocatore " + to_string(g2) + " per pernottamento nella casella " + to_string(c);
+s = "- Giocatore " + to_string(g1) + " ha pagato " + to_string(f) + " fiorini a giocatore " + to_string(g2) + " per pernottamento nella casella " + c;
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;

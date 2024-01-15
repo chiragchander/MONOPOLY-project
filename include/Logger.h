@@ -1,3 +1,4 @@
+//luca pianizzola
 #ifndef LOGGER_H
 #define LOGGER_H
 #include <iostream>
@@ -11,11 +12,11 @@ public:
 Logger();
 Logger(string s);
 void lan_dadi(int g, int d);
-void posizione(int g, int c);
-void acq_ter(int g, int c);
-void costr_casa(int g, int c);
-void costr_alb(int g, int c);
-void pag_ped(int g1, int g2, int f, int c);
+void posizione(int g, string c);
+void acq_ter(int g, string c);
+void costr_casa(int g, string c);
+void costr_alb(int g, string c);
+void pag_ped(int g1, int g2, int f, string c);
 void vince(int g);
 void elimin(int g);
 void fine_turno(int g);

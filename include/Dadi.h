@@ -10,10 +10,12 @@ class Dadi {
 private:
     int dado1 = 1;
     int dado2 = 1;
+    int dado_robot=1;
     int somma = 0;
 public:
     Dadi();
     int lancio();
+    int lancio_robot();
     int attuale() const { return somma; }
     int get_dado1() const { return dado1; }
     int get_dado2() const { return dado2; }

@@ -32,6 +32,7 @@ public:
     bool operator==(const Casella& other);//Overloading Operatore ==
     int length() const; //Restituisce la lunghezza della Casella
     void print_position(); //Stampa la posizione della cella usando come indice della ascissa un numero da 1 a 8, mentre come indice dell'ordinata una lettera da A a H
+    std::string position_to_string();
     Posizione get_position() const {return position;}; //Restituisce la posizione della cella
     void set_position(Posizione pos) {position= pos;}
     bool is_terreno() {return lvl==1;}

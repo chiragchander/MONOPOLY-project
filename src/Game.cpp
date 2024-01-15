@@ -30,6 +30,7 @@ void Game::add_giocatore(Player* pippo) {
 }
 
 void Game::del_giocatore(Player* pippo) {
+    log.elimin(pippo->get_nome());
     auto it = std::find_if(giocatori.begin(), giocatori.end(), [pippo](const Player* player) {
         return *player == *pippo;
     });
@@ -132,17 +133,17 @@ void Game::intro() {
         return std::find(ordine.begin(), ordine.end(), indice_a) < std::find(ordine.begin(), ordine.end(), indice_b);
     });
 
-
+    log.ordine_giocatori(ordine);
     // LLL aggiornerei logger per avvisare dell'ordine dei giocatori
 }
 
 void Game::turno_robot(Player* pippo){
+    log.inizio_turno(pippo->get_nome());
     Dadi d;
     ////////////LOGGER----->INIZIO TURNO ROBOT
-    std::cout<<"giocatore "<<pippo->get_nome()<< " inizia il turno"<<std::endl ;
     move_player(pippo);
     ////////////LOGGER----->MOVIMENTO ROBOT
-
+    
     //casella angolare, non faccio niente e il turno termina
     if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_angolo()){
         //LOGGER---> FINE TURNO
@@ -156,19 +157,18 @@ void Game::turno_robot(Player* pippo){
 
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
-
-                std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
+            
+            std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
+            log.acq_ter(pippo->get_nome(),pippo->get_position().position_to_string());
             }
             else{
                 ///LOGGER FINE TURNO
                 std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
             }
         }
         else   {
             ///LOGGER FINE TURNO
             std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
         }
     }
     //terreno di proprietà, posso migliorare a casa
@@ -179,19 +179,19 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
-
+                log.costr_casa(pippo->get_nome(), pippo->get_position().position_to_string());
+                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
             }
             else{
                 ///LOGGER FINE TURNO
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
+                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+                
             }
         }
         else   {
             ///LOGGER FINE TURNO
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
+            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+            
         }
     }
     //terreno di proprietà, posso migliorare ad albergo
@@ -202,19 +202,20 @@ void Game::turno_robot(Player* pippo){
             if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
-
+            log.costr_alb(pippo->get_nome(),pippo->get_position().position_to_string());
+            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
+            
             }
             else{
                 ///LOGGER FINE TURNO
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
+                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+                
             }
         }
         else   {
             ///LOGGER FINE TURNO
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
+            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
+            
         }
     }
     //casa di un altro giocatore, pago il pernottamento
@@ -226,13 +227,14 @@ void Game::turno_robot(Player* pippo){
             //pippo paga a giocatore 2, giocatore 2 riceve
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
-
+            std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
+            
+            log.pag_ped(pippo->get_nome(),get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->get_nome(),board[pippo->get_position().get_x()][pippo->get_position().get_y()].price(),pippo->get_position().position_to_string());
             }
             else{
                 ///LOGGER GAME OVER ROBOT
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " eliminato"<<std::endl ;
-
+                std::cout<<"giocatore "<<pippo->get_nome()<< " eliminato"<<std::endl ;
+                
                 giocatore_over(pippo);
                 get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());
 
@@ -242,163 +244,8 @@ void Game::turno_robot(Player* pippo){
 
 //LOGGER FINE TURNO
 
+log.fine_turno(pippo->get_nome());
 }
-
-
-
-void Game::turno_human(Player* pippo){
-    Dadi d;
-    ////////////LOGGER----->INIZIO TURNO ROBOT
-    string input_utente;
-    std::cout << "    <#> Accetto solamente \"show\" o \"roll\".\n";
-    std::cin >> input_utente;
-
-                // Controlla il comando ed eventualmente eseguine l'azione.
-    if (input_utente == "show") {
-            // Mostra dati della partita, come da consegna.
-
-            /* @@@, implementata funzioni game VISUALIZZA, ne scrivo qui alcune similari al volo, da migliorare
-                    - tabellone
-                    - lista terreni/case/alberghi posseduti da ogni giocatore
-                    - ammontare di fiorini posseduto da tutti i giocatori
-            */
-        // tabellone
-        print_gameboard();
-        // lista proprieta' e fiorini
-        for(int i=0; i < 4; i++) {
-            Player* gio_temp = get_giocatori(i);
-            cout << "Giocatore " << gio_temp->get_nome() << " ha le caselle:\n";
-            gio_temp->print_proprie();
-            cout << "Inoltre tale Giocatore ha " << gio_temp->get_budget() << " fiorini.\n\n";
-            }
-    }
-
-    else if(input_utente == "roll"){
-    /////////////////////////////////////////////////////////DA SISTEMARE
-                    // Lancia i dadi e prosegui.
-        move_player(pippo);
-        ////////////LOGGER----->MOVIMENTO ROBOT
-
-        //casella angolare, non faccio niente e il turno termina
-        if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_angolo()){
-            //LOGGER---> FINE TURNO
-        }
-        //terreno senza proprietario, posso comprare il terreno
-        else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()==0 &&
-            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_terreno()){
-            //LOGGER-->
-            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
-            char answer;
-            std::cout<<"Desideri comprare il terreno?"<<std::endl;
-            std::cin>>answer;
-                if(answer=='S'){
-                    pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-                    board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
-                    std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
-
-                }
-                else if(answer== 'N'){
-                    ///LOGGER FINE TURNO
-                    std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-                }
-                //DA GESTIRE QUANDO SI INSERISCE IL CARATTERE SBAGLIATO
-                }
-            else   {
-            ///LOGGER FINE TURNO
-            std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-            }
-        }
-
-
-
-    //terreno di proprietà, posso migliorare a casa
-    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()== pippo->get_nome() &&
-            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_terreno()){
-        //LOGGER-->
-            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
-
-                char answer;
-            std::cout<<"Desideri costruire una casa?"<<std::endl;
-            std::cin>>answer;
-                if(answer=='S'){
-                pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-                board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
-
-            }
-            else if(answer=='N'){
-                ///LOGGER FINE TURNO
-                    std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-            }
-
-            }
-            else{
-                ///LOGGER FINE TURNO
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
-            }
-    }
-
-
-    //terreno di proprietà, posso migliorare ad albergo
-    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()== pippo->get_nome() &&
-            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_casa()){
-        //LOGGER-->
-
-            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
-            char answer;
-            std::cout<<"Desideri costruire una casa?"<<std::endl;
-            std::cin>>answer;
-                if(answer=='S'){
-
-            pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-            board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
-
-            }
-            else if(answer=='N'){
-                ///LOGGER FINE TURNO
-                    std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-            }
-            }
-
-            else{
-                ///LOGGER FINE TURNO
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " finisce il turno"<<std::endl ;
-
-            }
-    }
-
-
-
-    //casa di un altro giocatore, pago il pernottamento
-    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner() != pippo->get_nome() &&
-            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_casa() || board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_albergo()){
-        //LOGGER-->
-            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
-
-            //pippo paga a giocatore 2, giocatore 2 riceve
-            pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-            get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
-                            std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
-
-            }
-            else{
-                ///LOGGER GAME OVER ROBOT
-                                std::cout<<"giocatore "<<pippo->get_nome()<< " eliminato"<<std::endl ;
-
-                giocatore_over(pippo);
-                get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());
-
-            }
-
-    }
-
-    }
-
-
-}
-
 
 void Game::giocatore_over(Player* pippo) {
     // Se il giocatore in questione pippo è da rimuovere, va tolto dalla lista
@@ -415,12 +262,14 @@ bool Game::fine_gioco() {
     }
     else return false;
 }
+
 std::vector<Player*> Game::vincitori() {
     std::vector<Player*> vincitori;
         if (giocatori.empty()) {
         return vincitori;
     }
-
+    
+    
     int massimo = giocatori[0]->get_budget();
     for (int i = 1; i < giocatori.size(); i++) {
         if (giocatori[i]->get_budget() > massimo) {
@@ -499,6 +348,7 @@ void Game::move_player(Player* pippo){
     Dadi dado;
     int passi= dado.lancio();
     int num=passi;
+    log.lan_dadi(pippo->get_nome(),passi);
     while(passi>0){
         pippo->set_position(pippo->get_position().next_position());
         pippo->add_steps(1);
@@ -508,7 +358,10 @@ void Game::move_player(Player* pippo){
         passi--;
     }
     std::cout<<"il giocatore "<<pippo->get_nome()<<" si e' mosso di "<<num<<" passi"<<std::endl;
+    log.posizione(pippo->get_nome(),pippo->get_position().position_to_string());
 }
+
+
 
 /*
 Game_Umano::Game_Umano() : Game(n) {
