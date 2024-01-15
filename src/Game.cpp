@@ -1,9 +1,10 @@
 // Lovato Emanuele
-
+#include "../include/Casella.h"
 #include "../include/Game.h"
 #include "../include/Board.h"
 #include "../include/Player.h"
 #include "../include/Dadi.h"        // Serve solo nella funzione intro()
+#include "../include/Logger.h"        // Serve solo nella funzione intro()
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
@@ -12,9 +13,11 @@
 
 Game::Game(): turno {1} {
     board= tabellone.get_board();
+    Player* giocatore1 = new Player(1);
     Player* giocatore2 = new Player(2);
     Player* giocatore3 = new Player(3);
     Player* giocatore4 = new Player(4);
+    add_giocatore(giocatore1);
     add_giocatore(giocatore2);
     add_giocatore(giocatore3);
     add_giocatore(giocatore4);
@@ -50,16 +53,171 @@ void Game::next_turno() {
     // @@@ Eventualmente aggiungere qui i 20 fiorni del player.
 }
 
-void Game::intro() {
-    // Come richiesto dalla consegna, ordine i giocatori con nome 1, 2, 3, 4 nell'ordine determianto dai dadi.
-//    Dadi dadolata;
-/*    for(int i = 1; i <= 4; i++) {
-        Player temp(i);
+std::vector<int> Game::order_players() {
+    Dadi dadi;
+    std::vector<int> tiri_dadi;
+    std::vector<int> giocatori;
+
+    // Esegui 4 tiri di dadi
+    for (int i = 0; i < 4; ++i) {
+        tiri_dadi.push_back(dadi.lancio());
+        giocatori.push_back(i + 1);
     }
-WORK IN PROGRESS, stavo facendola ora @@@.
-*/
+
+    // Trova il massimo tra i tiri
+    int massimo = *std::max_element(tiri_dadi.begin(), tiri_dadi.end());
+
+    // Trova i giocatori che hanno ottenuto il massimo
+    std::vector<int> giocatori_con_massimo;
+    for (int i = 0; i < 4; ++i) {
+        if (tiri_dadi[i] == massimo) {
+            giocatori_con_massimo.push_back(giocatori[i]);
+        }
+    }
+
+
+    if (giocatori_con_massimo.size() > 1) {
+        std::cout << "Spareggio tra i giocatori: ";
+        for (int giocatore : giocatori_con_massimo) {
+            std::cout << giocatore << " ";
+        }
+        std::cout << std::endl;
+
+         giocatori.erase(std::remove_if(giocatori.begin(), giocatori.end(),
+                          [&giocatori_con_massimo](int giocatore) {
+                              return std::find(giocatori_con_massimo.begin(),
+                                               giocatori_con_massimo.end(),
+                                               giocatore) != giocatori_con_massimo.end();
+                          }),
+            giocatori.end());
+
+        tiri_dadi.clear();
+        for (int i = 0; i < giocatori_con_massimo.size(); ++i) {
+            tiri_dadi.push_back(dadi.lancio());
+        }
+
+        // Trova nuovamente i giocatori che hanno ottenuto il massimo
+        massimo = *std::max_element(tiri_dadi.begin(), tiri_dadi.end());
+        giocatori_con_massimo.clear();
+        for (int i = 0; i < giocatori.size(); ++i) {
+            if (tiri_dadi[i] == massimo) {
+                giocatori_con_massimo.push_back(giocatori[i]);
+            }
+        }
+    }
+
+    // Ordina gli indici dei giocatori in base al dado più alto
+    std::sort(giocatori.begin(), giocatori.end(), [&tiri_dadi](int a, int b) {
+        return tiri_dadi[a - 1] > tiri_dadi[b - 1];
+    });
+
+    return giocatori;
+}
+
+
+Player* Game::get_player_from_index(int n) {
+    for (int i=0; i<giocatori.size();i++) {
+        if (giocatori[i]->get_nome() == n) {
+            return giocatori[i];
+        }
+    }
+    return nullptr;
+}//get_player_from_index
+
+void Game::intro() {
+    std::vector<int> ordine= order_players();
+    std::sort(giocatori.begin(), giocatori.end(), [&](Player* a, Player* b) {
+        int indice_a = a->get_nome();
+        int indice_b = b->get_nome();
+        return std::find(ordine.begin(), ordine.end(), indice_a) < std::find(ordine.begin(), ordine.end(), indice_b);
+    });
+
 
     // LLL aggiornerei logger per avvisare dell'ordine dei giocatori
+}
+
+void Game::turno_robot(Player* pippo){
+    Dadi d;
+    ////////////LOGGER----->INIZIO TURNO ROBOT
+    move_robot(pippo);
+    ////////////LOGGER----->MOVIMENTO ROBOT
+    //casella angolare, non faccio niente e il turno termina
+    if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_angolo()){
+        //LOGGER---> FINE TURNO
+    }
+    //terreno senza proprietario, posso comprare il terreno
+    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()==0 &&
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_terreno()){
+        //LOGGER-->
+        if(d.scelta_percento()){
+            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
+
+            pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
+            }
+            else{
+                ///LOGGER FINE TURNO
+            }
+        }
+        else   {
+            ///LOGGER FINE TURNO
+        }
+    }
+    //terreno di proprietà, posso migliorare a casa
+    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()== pippo->get_nome() &&
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_terreno()){
+        //LOGGER-->
+        if(d.scelta_percento()){
+            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
+                pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+                board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
+            }
+            else{
+                ///LOGGER FINE TURNO
+            }
+        }
+        else   {
+            ///LOGGER FINE TURNO
+        }
+    }
+    //terreno di proprietà, posso migliorare ad albergo
+    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner()== pippo->get_nome() &&
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_casa()){
+        //LOGGER-->
+        if(d.scelta_percento()){
+            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
+            pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
+            }
+            else{
+                ///LOGGER FINE TURNO
+            }
+        }
+        else   {
+            ///LOGGER FINE TURNO
+        }
+    }
+    //casa di un altro giocatore, pago il pernottamento
+    else if(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner() != pippo->get_nome() &&
+            board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_casa() || board[pippo->get_position().get_x()][pippo->get_position().get_y()].is_albergo()){
+        //LOGGER-->
+            if(pippo->get_budget()>= board[pippo->get_position().get_x()][pippo->get_position().get_y()].price()){
+
+            //pippo paga a giocatore 2, giocatore 2 riceve
+            pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+            get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
+            }
+            else{
+                ///LOGGER GAME OVER ROBOT
+                giocatore_over(pippo);
+                get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(pippo->get_budget());
+
+            }
+
+    }
+
+//LOGGER FINE TURNO
+
 }
 
 void Game::giocatore_over(Player* pippo) {

@@ -23,6 +23,21 @@ void Player::add_steps(int n){
     passi +=n;
 }
 
+void Player::print_proprie(){
+    if(proprie[0]== nullptr){
+        std::cout<<"---"<<std::endl;
+    }
+    else{
+        std::vector<Casella*> celle= get_proprie();
+        for(int i=0; i<celle.size(); i++){
+            celle[i]->print_position();
+            std::cout<<" ";
+        }
+        std::cout<<std::endl;
+    }
+
+}
+
 
 bool Player::compra_casella(Casella* c) {
     int costo = c->price();     // Costo della casella da acquistare

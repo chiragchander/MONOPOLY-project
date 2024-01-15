@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include "../include/Logger.h"
 using namespace std;
@@ -118,6 +119,21 @@ return;
 void Logger::pas_via(int g) {
 string s;
 s = "- Giocatore " + to_string(g) + " è passato dal via e ha ritirato 20 fiorini";
+cout<<s<<endl;
+fout.open(fn, ios::app);
+fout<<s<<endl;
+fout.close();
+return;
+}
+
+void Logger::ordine_giocatori(vector<int> g) {
+string s;
+s = "- L'ordine dei Giocatori è: ";
+for(int i=0; i<g.size()-1; i++){
+    s += "Giocatore: " + to_string(g[i])+ " ,";
+}
+s+= "Giocatore: "+ to_string(g[3]) + ".";
+
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;

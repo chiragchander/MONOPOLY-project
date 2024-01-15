@@ -34,6 +34,10 @@ public:
     void print_position(); //Stampa la posizione della cella usando come indice della ascissa un numero da 1 a 8, mentre come indice dell'ordinata una lettera da A a H
     Posizione get_position() const {return position;}; //Restituisce la posizione della cella
     void set_position(Posizione pos) {position= pos;}
+    bool is_terreno() {return lvl==1;}
+    bool is_casa() {return lvl==2;}
+    bool is_albergo()  {return lvl==3;}
+    bool is_angolo()  {return lvl==0;}
 
     void set_owner(int player_index);//Assegna alla cella l'indice del proprietario
     int get_owner() {return owner;};//Resitituisce l'indice del giocatore proprietario della cella

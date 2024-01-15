@@ -16,6 +16,18 @@ int Dadi::lancio() {
     return somma;
 }
 
+
+int Dadi::lancio_robot() {
+    dado_robot= rand() %4 + 1;
+        if(dado_robot==1){
+        dado1 = rand() % 6 + 1;
+        dado2 = rand() % 6 + 1;
+        somma = dado1 + dado2;
+        return somma;
+    }
+    return 0;
+}
+
 // Funzione che può essere utilizzata per un output graficamente accettabile in-game.
 // Tale stampa va differenziata lievemente tra somme ad una o a due cifre.
 void Dadi::stampa_quadro() {
@@ -34,4 +46,13 @@ void Dadi::stampa_quadro() {
 // Overloading operatore <<
 std::ostream& operator<<(std::ostream& os, const Dadi& d) {
     return os << "[" << d.get_dado1() << "+" << d.get_dado2() << "]=" << d.attuale() << "\n";
+}
+
+// Scelta per giocatore computer in base alla percentuale.
+// Al 25% compra il terreno.
+bool Dadi::scelta_percento() {
+    int percento;
+    percento = rand() % 4;
+    if(percento == 0) return true;
+    else return false;
 }
