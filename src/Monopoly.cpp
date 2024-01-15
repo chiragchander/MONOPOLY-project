@@ -35,14 +35,15 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    Board board;
-    Dadi dadi;
-    Game game;
-
     // Come da consegna, due diversi file di log a seconda della tipologia di partita.
     string nome_file;
     if(partita_umana) nome_file = "log_human.txt";
     else nome_file = "log_computer.txt";
+    
+    Board board;
+    Dadi dadi;
+    Game game(nome_file);
+
     Logger logger(nome_file);   // Logger per i vari eventi del gioco.
 
     // Crea l'ordine iniziale dei giocatori.
@@ -67,7 +68,6 @@ int main(int argc, char* argv[]) {
             cout << "Umano, attendo un tuo comando!\n";
 
             do {
-                    logger.inizio_turno(gio_attuale->get_nome());
                     game.turno_human(gio_attuale);
                     break;
             } while(true);
@@ -79,10 +79,8 @@ int main(int argc, char* argv[]) {
 
             // @@@ move_player e move_robot vanno cambiate radicalmente
             game.turno_robot(gio_attuale);
-            game.move_player(gio_attuale);
         }
 
-        logger.fine_turno(gio_attuale->get_nome());
         // Prossimo giocatore
         conta_gio++;
 
@@ -94,7 +92,6 @@ int main(int argc, char* argv[]) {
                 Player* gio_temp = game.get_giocatori(i);
                 // Analisi se ciascuno dei gio_temp hanno soldi, se povero() rimuoverlo ed aggiornare totale_gio.
                 if(gio_temp->povero()) {
-                    logger.elimin(gio_temp->get_nome());     // Segnala nel log prima di eliminare il giocatore.
                     game.del_giocatore(gio_temp);
                     i--;            // Slittato il vettore player di uno.
                     totale_gio--;   // Di conseguenza anche numero giocatori ridotto.

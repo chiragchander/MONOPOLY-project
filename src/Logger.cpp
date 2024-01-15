@@ -7,14 +7,10 @@ using namespace std;
 
 Logger::Logger(string s) {
 fn = s;
-fout.open(fn);
-fout.close();
 }
 
 Logger::Logger(){
 fn = "log.txt";
-fout.open(fn);
-fout.close();
 }
 
 void Logger::lan_dadi(int g, int d) {
@@ -138,6 +134,17 @@ s+= "Giocatore: "+ to_string(g[3]) + ".";
 cout<<s<<endl;
 fout.open(fn, ios::app);
 fout<<s<<endl;
+fout.close();
+return;
+}
+
+void Logger::set_nome_file(string s){
+fn = s;
+return;
+}
+
+void Logger::nuovo_f(){
+fout.open(fn);
 fout.close();
 return;
 }
