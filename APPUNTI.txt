@@ -1,29 +1,48 @@
-Ordunque, qui è Ema. Mi sono reso conto che se non implementiamo le varie parti in maniera sincrona, magari con qualche modalità di live coding in tempo reale, non si va avanti bene.
-In alcuni punti mi sono trovato a dovermi ristudiare il vostro codice per poter implementare cose, che probabilmente voi avreste fatto in un attimo.
-Ad ora sto lavorando su Game.h / Game.cpp che danno errori in compilazione, le stavo scrivendo ora.
-Troveremo un modo, per ora nei commenti ho usato al volo le seguenti abbrviazioni.
-- @@@ inidicazioni più che altro per me
-- LLL indicazioni per Luca, soprattutto in merito alla parte Logger.
-- CCC indicazioni per Chirag, soprattutto in merito alla parte Board.
+[RICONTROLLARE]: 
+    - la maggior parte dei cout in [main], [Game] e altre vanno implementate con funzioni di logger, 
+        - ATTENZIONE: tutto nell'unico file log scelto nel main.
+    - correttezza visualizzazione tabellone e log quando si ha gioco computer.
 
-Servono ancora un Main, un MainLoop, che può essere anche una maxi funzione nel Main, decidere se implementare con ereditarietà classe Game_Umano.
+[VARIE]:
+- Implementare vincitori plurimi. [Game]
+- Implementare 20 fiorini passando dal via. [Board] ed inserirlo nel [Logger].
+- Decidere come scegliere qual'è il numero del giocatore umano, o sceglierne uno per convenzione. [main]
+- Totale_gio, magari includerlo in Game? [main]
+- Rimuovere bool vivo se basta povero(). [Player]
 
-Da Main stabilire con argc/argv se il gioco ha giocatore umano ed agire di conseguenza.
+[DIFFERENZE TIPOLOGIA COMPUTER / HUMAN]:
+- [TODO Game]- umano sceglie se comprare nella casella il terreno, casa o albergo. [S] o [N]
+    -> move_player e move_robot vanno cambiate radicalmente:
+    -> sono pressochè identichè, unica differenza è che:
+        - il pc decide in base a risultato Dadi::scelta_percento() già randomizzata con time();
+        - l'umano ha scelta tra S e N per l'acquisto.
+- [FATTO]- diverso log per umano
+- [DA SISTEMARE]- può chiedere visualizzazione tabellone corrente ->
+    -> può usare il comando show 
+    -> a quanto pare quando è il turno dell'umano solamente, stando alla consegna del prof.
+        - visualizzare il tabellone
+        - visualizzare lista terreni/case/alberghi posseduti da ogni giocatore
+        - visualizzare l’ammontare di fiorini posseduto da tutti i giocatori
+    -> !!! nello specifico va sistemato overloading operatore << per std::vector<Casella*> get_proprie();
+        altrimenti da errori in stampa.
 
-MainLoop
-INIZIO
-- Tirare i dadi per stabilire ordine giocatori.
-    - Confrontando attuale() con lancio() ripetere ovviamente il tiro.
-    - Salvare la lista in Game su vettore Game::giocatori. Più che altro ho usato come nomi Giovatore "1", "2", "3" e "4" come richiesto, ma essi non corrisponderanno all'ordine.
-    - Tale ordine viene per ora previsto in Game::intro() su cui mi sono fermato or ora.
+[MEMO]
+Qui Ema, a tarda notte completato main e mainLoop inseriti nel file Monopoly.cpp. 
+Compila ma da Job 1, './monopoly' terminated by signal SIGSEGV (Address boundary error) su Linux.
+Sarà da controllare alla fine i boundary dei vector come chiedeva il prof. 
+E magari vedere se serve allocazione memoria, qualche distruttore ed eventuale ereditarietà. Per ora non sembra.
+Ho cambiato il CMake, sostituendo il vecchio MainTest.cpp che non serve più con Monopoly.cpp nuovo.
+Unico dubbio riguarda i primi comandi che avevate messo, che incollo qui sotto. Se qualcuno è indispensabile, 
+va messo all'inizio, prima di game.intro(). CONTROLLATE se serve qualcosa per avviare.
+    Board b;
+    b.print_board();
+    Casella start= b.get_starting_cell();
 
-TURNO DI GIOCO LOOP
-
-FINALE
-
-OGGETTI contenuti in MainLoop:
-- 1 Board
-- 1 Dadi
-- 1 Game
-- 1 Logger
-- Variabile per sapere se Game o Game_Umano
+    for (int i = 0; i < 28; ++i) {
+        b.move(start, 1);
+        cout << endl;
+        start.print_position();
+        cout << endl;
+    }
+    cout<<endl;
+    int laps=b.laps();

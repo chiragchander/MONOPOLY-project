@@ -14,8 +14,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2")	# Parametro -O2 del compilatore, per ottimizz
 
 include_directories(include)
 
-add_executable(maintest
-	src/MainTest.cpp
+add_executable(monopoly
+	src/Monopoly.cpp
 )
 
 add_library(game
@@ -53,7 +53,7 @@ add_library(dadi
 	src/Dadi.cpp
 )
 
-target_link_libraries(maintest
+target_link_libraries(monopoly
 	game
 	board
 	casella
