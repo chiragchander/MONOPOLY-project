@@ -558,6 +558,5 @@ void Game::move_player(Player *pippo)
         }
         passi--;
     }
-    std::cout << "il giocatore " << pippo->get_nome() << " si e' mosso di " << count << " passi" << std::endl;
     log.posizione(pippo->get_nome(), pippo->get_position().position_to_string());
 }
