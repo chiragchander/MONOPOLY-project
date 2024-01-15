@@ -19,6 +19,7 @@ private:
     Logger log;
 public:
     Game();
+    Game(std::string s);
     int get_turno() const { return turno; }
     void next_turno();
     void intro();
