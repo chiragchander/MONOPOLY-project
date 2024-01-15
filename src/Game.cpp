@@ -224,6 +224,7 @@ void Game::turno_robot(Player* pippo){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                             std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
+                            log.pag_ped(pippo->get_nome(),get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->get_nome(),board[pippo->get_position().get_x()][pippo->get_position().get_y()].price(),pippo->get_position().position_to_string());
 
             }
             else{
@@ -244,6 +245,7 @@ log.fine_turno(pippo->get_nome());
 
 
 void Game::turno_human(Player* pippo){
+    log.inizio_turno(pippo->get_nome());
     Dadi d;
     ////////////LOGGER----->INIZIO TURNO ROBOT
     string input_utente;
@@ -292,6 +294,7 @@ void Game::turno_human(Player* pippo){
                     pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                     board[pippo->get_position().get_x()][pippo->get_position().get_y()].set_owner(pippo->get_nome());
                     std::cout<<"giocatore "<<pippo->get_nome()<< " compra terreno"<<std::endl ;
+                    log.acq_ter(pippo->get_nome(),pippo->get_position().position_to_string());
 
                 }
                 else if(answer== 'N'){
@@ -321,6 +324,7 @@ void Game::turno_human(Player* pippo){
                 pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                 board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
                                 std::cout<<"giocatore "<<pippo->get_nome()<< " migliora terreno in casa"<<std::endl ;
+                                log.costr_casa(pippo->get_nome(), pippo->get_position().position_to_string());
 
             }
             else if(answer=='N'){
@@ -351,6 +355,7 @@ void Game::turno_human(Player* pippo){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             board[pippo->get_position().get_x()][pippo->get_position().get_y()].upgrade();
                             std::cout<<"giocatore "<<pippo->get_nome()<< " migliora casa in albergo"<<std::endl ;
+                            log.costr_alb(pippo->get_nome(),pippo->get_position().position_to_string());
 
             }
             else if(answer=='N'){
@@ -378,6 +383,7 @@ void Game::turno_human(Player* pippo){
             pippo->paga(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
             get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->ricevi(board[pippo->get_position().get_x()][pippo->get_position().get_y()].price());
                             std::cout<<"giocatore "<<pippo->get_nome()<< " paga pernottamento"<<std::endl ;
+                            log.pag_ped(pippo->get_nome(),get_player_from_index(board[pippo->get_position().get_x()][pippo->get_position().get_y()].get_owner())->get_nome(),board[pippo->get_position().get_x()][pippo->get_position().get_y()].price(),pippo->get_position().position_to_string());
 
             }
             else{
@@ -393,6 +399,7 @@ void Game::turno_human(Player* pippo){
 
     }
 
+log.fine_turno(pippo->get_nome());
 
 }
 
