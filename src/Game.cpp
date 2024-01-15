@@ -77,19 +77,17 @@ void Game::next_turno()
 std::vector<int> Game::order_players() {
         Dadi dadi;
         std::vector<int> giocatori(4);
-
-        // Esegui 4 tiri di dadi e assegna risultati ai giocatori
         for (int i = 0; i < 4; ++i) {
             giocatori[i] = i + 1;
         }
 
-        // Ordina i giocatori casualmente usando un ciclo di scambio
+        // Ordina i giocatori a caso
         for (int i = 0; i < 4; ++i) {
             int indiceCasuale = rand() % 4;
             std::swap(giocatori[i], giocatori[indiceCasuale]);
         }
 
-        // Trova il massimo tra i tiri
+        // Trova massimo
         int massimo = 0;
         for (int i = 0; i < 4; ++i) {
             int lancio = dadi.lancio();
@@ -99,7 +97,7 @@ std::vector<int> Game::order_players() {
             }
         }
 
-        // Trova i giocatori che hanno ottenuto il massimo
+        // Trova i giocatori che hanno  il massimo
         std::vector<int> giocatori_con_massimo;
         for (int i = 0; i < 4; ++i) {
             if (dadi.lancio() == massimo) {
@@ -107,7 +105,7 @@ std::vector<int> Game::order_players() {
             }
         }
 
-        // Se ci sono più giocatori con lo stesso punteggio, esegui uno spareggio
+        // Spareggio
         if (giocatori_con_massimo.size() > 1) {
             std::cout << "Spareggio tra i giocatori: ";
             for (int i = 0; i < giocatori_con_massimo.size(); ++i) {
@@ -124,7 +122,7 @@ std::vector<int> Game::order_players() {
                 giocatori_con_massimo.end());
         }
 
-        // Ordina gli indici dei giocatori in base al dado più alto
+        // Ordina gli indici dei giocatori in base al masismo
         for (int i = 0; i < 3; ++i) {
             for (int j = i + 1; j < 4; ++j) {
                 if (dadi.lancio() > dadi.lancio()) {
