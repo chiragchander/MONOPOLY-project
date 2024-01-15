@@ -42,6 +42,8 @@ public:
 
     void set_owner(int player_index);//Assegna alla cella l'indice del proprietario
     int get_owner() {return owner;};//Resitituisce l'indice del giocatore proprietario della cella
+    
+    std::string to_string();
 
 };
 std::ostream& operator<<(std::ostream& os, const Casella& c);//Overloading operatore<<

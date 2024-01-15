@@ -485,7 +485,7 @@ void Game::print_gameboard_line(int n)
         posizioni_giocatori.push_back(std::make_pair(x, y));
     }
 
-    std::cout << alphabet[n - 1] << "   ";
+    std::cout << alphabet[n - 1] << " ";
     for (int i = 0; i < 8; i++)
     {
         if (board[i][n - 1].is_central_cell())
@@ -513,19 +513,19 @@ void Game::print_gameboard_line(int n)
             switch (giocatori_presenti_nella_casella.size())
             {
             case 0:
-                std::cout << "|" << board[i][n - 1] << "     |";
+            	std::cout << centr(board[i][n - 1].to_string());
                 break;
             case 1:
-                std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << "    |";
+                std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]));
                 break;
             case 2:
-                std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << "   |";
+                std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]));
                 break;
             case 3:
-                std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << giocatori_presenti_nella_casella[2] << "  |";
+            	std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]));
                 break;
             case 4:
-                std::cout << "|" << board[i][n - 1] << giocatori_presenti_nella_casella[0] << giocatori_presenti_nella_casella[1] << giocatori_presenti_nella_casella[2] << giocatori_presenti_nella_casella[3] << " |";
+            	std::cout << centr(board[i][n - 1].to_string() + std::to_string(giocatori_presenti_nella_casella[0]) + std::to_string(giocatori_presenti_nella_casella[1]) + std::to_string(giocatori_presenti_nella_casella[2]) + std::to_string(giocatori_presenti_nella_casella[3]));
                 break;
             }
         }
@@ -546,9 +546,34 @@ void Game::move_player(Player *pippo)
         if (pippo->get_steps() % 28 == 0 && pippo->get_steps() > 0)
         {
             pippo->ricevi(20);
-            log.pas_via(pippo->get_nome());
         }
         passi--;
     }
     log.posizione(pippo->get_nome(), pippo->get_position().position_to_string());
+}
+
+std::string Game::centr(std::string s){
+	std::string def;
+	if((6-s.size())%2){
+	int t = (6 - s.size())/2;
+	for(int i = 0; i < t; i++){
+		def += " ";
+	}
+	def += "|" + s + "|";
+	for(int i = 0; i <= t; i++){
+		def += " ";
+	}
+	return def;
+	} else {
+	int t = (6 - s.size())/2;
+	for(int i = 0; i < t; i++){
+		def += " ";
+	}
+	def += "|" + s + "|";
+	for(int i = 0; i < t; i++){
+		def += " ";
+	}
+	return def;
+}
+
 }

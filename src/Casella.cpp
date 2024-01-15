@@ -140,6 +140,26 @@ void Casella::set_owner(int player_index){
     owner=player_index;
 }//set_owner
 
-
+std::string Casella::to_string(){
+if(get_type()==0 && (get_lvl()== -1 || get_lvl() == 0 )){
+        return " ";
+    }
+    else if(get_type() == 1 && get_lvl() == 0) {
+            return "P";
+    } else if (get_lvl() == 1) {
+        if (get_type() == 2) return  "E";
+        if (get_type() == 3) return  "S";
+        if (get_type() == 4) return  "L";
+    } else if (get_lvl() == 2) {
+        if (get_type() == 2) return  "E*";
+        if (get_type() == 3) return  "S*";
+        if (get_type() == 4) return  "L*";
+    } else if (get_lvl() == 3) {
+        if (get_type() == 2) return  "E^";
+        if (get_type() == 3) return  "S^";
+        if (get_type() == 4) return  "L^";
+    }
+	
+}
 
 
