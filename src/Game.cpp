@@ -546,6 +546,7 @@ void Game::move_player(Player *pippo)
         if (pippo->get_steps() % 28 == 0 && pippo->get_steps() > 0)
         {
             pippo->ricevi(20);
+            log.pas_via(pippo->get_nome());
         }
         passi--;
     }
